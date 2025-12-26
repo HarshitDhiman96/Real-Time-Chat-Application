@@ -11,8 +11,23 @@ const authroutes = require("../src/routes/auth-routes");
 const app = express();
 
 // 2. CORS configuration
+// Allow both localhost (development) and Netlify (production) origins
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://your-netlify-app.netlify.app", // Replace with your actual Netlify URL
+  process.env.FRONTEND_URL // Allow environment variable override
+].filter(Boolean); // Remove any undefined values
+
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV !== 'production') {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
 
@@ -38,9 +53,23 @@ const server = http.createServer(app);
 // 8. Create Socket.io server with CORS
 const io = socketio(server, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: function (origin, callback) {
+      // Allow requests with no origin
+      if (!origin) return callback(null, true);
+      const allowedOrigins = [
+        "http://localhost:5173",
+        "https://your-netlify-app.netlify.app", // Replace with your actual Netlify URL
+        process.env.FRONTEND_URL
+      ].filter(Boolean);
+      if (allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV !== 'production') {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     methods: ["GET", "POST"],
-    credentials: true
+    credentials: true,
+    transports: ['websocket', 'polling']
   }
 });
 

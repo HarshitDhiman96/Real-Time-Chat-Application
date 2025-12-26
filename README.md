@@ -77,6 +77,11 @@ Chat App/
 └── README.md
 ```
 
+## 🌐 Live Demo
+
+- **Frontend**: [Deployed on Netlify](https://your-netlify-app.netlify.app) (Update with your Netlify URL)
+- **Backend**: [Deployed on Render](https://real-time-chat-application-hxoe.onrender.com)
+
 ## 🛠️ Installation & Setup
 
 ### Prerequisites
@@ -258,6 +263,34 @@ This project is licensed under the ISC License.
 ## 👨‍💻 Author
 
 Built with ❤️ for real-time communication
+
+---
+
+## 📦 Deployment
+
+### Frontend (Netlify)
+
+1. Build the project:
+```bash
+cd Frontend
+npm run build
+```
+
+2. Deploy the `dist` folder to Netlify
+3. Set environment variables in Netlify:
+   - `VITE_API_URL=https://real-time-chat-application-hxoe.onrender.com`
+   - `VITE_SOCKET_URL=https://real-time-chat-application-hxoe.onrender.com`
+
+### Backend (Render)
+
+1. Connect your GitHub repository to Render
+2. Set environment variables:
+   - `MONGODB_URI=your_mongodb_connection_string`
+   - `jwtkey=your_jwt_secret_key`
+   - `FRONTEND_URL=https://your-netlify-app.netlify.app`
+3. Update CORS in `server.js` to include your Netlify URL
+
+For detailed deployment instructions, see [DEPLOYMENT.md](./DEPLOYMENT.md)
 
 ---
 

@@ -15,10 +15,15 @@ const Chat = ({ userName, token, onLogout }) => {
 
   useEffect(() => {
     // Connect to socket.io server
-    const newSocket = io('http://localhost:3000', {
+    // Use environment variable for Socket URL, fallback to deployed backend
+    const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || 'https://real-time-chat-application-hxoe.onrender.com';
+    
+    const newSocket = io(SOCKET_URL, {
       auth: {
         token: token,
       },
+      withCredentials: true,
+      transports: ['websocket', 'polling'], // Ensure both transports are available
     });
 
     // Join the chat with username
