@@ -14,7 +14,7 @@ const app = express();
 // Allow both localhost (development) and Netlify (production) origins
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://your-netlify-app.netlify.app", // Replace with your actual Netlify URL
+  "https://real-time-chat-application-chatapp.netlify.app", // Replace with your actual Netlify URL
   process.env.FRONTEND_URL // Allow environment variable override
 ].filter(Boolean); // Remove any undefined values
 
@@ -58,7 +58,7 @@ const io = socketio(server, {
       if (!origin) return callback(null, true);
       const allowedOrigins = [
         "http://localhost:5173",
-        "https://your-netlify-app.netlify.app", // Replace with your actual Netlify URL
+        "https://real-time-chat-application-chatapp.netlify.app", // Replace with your actual Netlify URL
         process.env.FRONTEND_URL
       ].filter(Boolean);
       if (allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV !== 'production') {
