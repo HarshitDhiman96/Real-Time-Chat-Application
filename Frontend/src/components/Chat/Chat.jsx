@@ -96,8 +96,21 @@ const Chat = ({ userName, token, onLogout }) => {
 
     setSocket(newSocket);
 
+    // Handle page reload/unload - disconnect socket
+    const handleBeforeUnload = () => {
+      if (newSocket && newSocket.connected) {
+        newSocket.disconnect();
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
     // Cleanup on unmount
     return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      if (newSocket && newSocket.connected) {
+        newSocket.disconnect();
+      }
       newSocket.close();
     };
   }, [userName, token]);

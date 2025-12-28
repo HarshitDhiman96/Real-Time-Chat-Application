@@ -9,18 +9,25 @@ function App() {
   const [token, setToken] = useState('');
 
   useEffect(() => {
-    // Check if user is already authenticated
-    const storedToken = getAuthToken();
-    if (storedToken) {
-      // In a real app, you'd verify the token with the backend
-      // For now, we'll check if there's a stored username
-      const storedUserName = localStorage.getItem('userName');
-      if (storedUserName) {
-        setUserName(storedUserName);
-        setToken(storedToken);
-        setIsAuthenticated(true);
-      }
-    }
+    // Auto-logout on page reload - clear authentication
+    const handleBeforeUnload = () => {
+      removeAuthToken();
+      localStorage.removeItem('userName');
+    };
+
+    // Clear auth on page load/reload
+    removeAuthToken();
+    localStorage.removeItem('userName');
+    setIsAuthenticated(false);
+    setUserName('');
+    setToken('');
+
+    // Also clear on page unload (reload/navigation)
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
   }, []);
 
   const handleLoginSuccess = (name, authToken) => {
