@@ -20,6 +20,11 @@ export const authAPI = {
     const response = await api.post('/chatapp/register', { name, email, password });
     return response.data;
   },
+
+  changePassword: async (name, newPassword) => {
+    const response = await api.post('/chatapp/changepassword', { name, newpassword: newPassword });
+    return response.data;
+  },
 };
 
 export const setAuthToken = (token) => {
