@@ -79,7 +79,7 @@ Chat App/
 
 ## 🌐 Live Demo
 
-- **Frontend**: [Deployed on Netlify](https://your-netlify-app.netlify.app) (Update with your Netlify URL)
+- **Frontend**: [Deployed on Netlify](https://real-time-chat-application-chatapp.netlify.app) 
 - **Backend**: [Deployed on Render](https://real-time-chat-application-hxoe.onrender.com)
 
 ## 🛠️ Installation & Setup
