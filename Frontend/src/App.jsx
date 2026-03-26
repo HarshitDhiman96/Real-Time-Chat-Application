@@ -1,57 +1,46 @@
-import { useState, useEffect } from 'react';
-import Auth from './components/Auth/Auth';
-import Chat from './components/Chat/Chat';
-import { getAuthToken, removeAuthToken } from './utils/api';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import LandingPage from './pages/LandingPage';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import ChatPage from './pages/ChatPage';
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [userName, setUserName] = useState('');
-  const [token, setToken] = useState('');
-
-  useEffect(() => {
-    // Auto-logout on page reload - clear authentication
-    const handleBeforeUnload = () => {
-      removeAuthToken();
-      localStorage.removeItem('userName');
-    };
-
-    // Clear auth on page load/reload
-    removeAuthToken();
-    localStorage.removeItem('userName');
-    setIsAuthenticated(false);
-    setUserName('');
-    setToken('');
-
-    // Also clear on page unload (reload/navigation)
-    window.addEventListener('beforeunload', handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
-  }, []);
-
-  const handleLoginSuccess = (name, authToken) => {
-    setUserName(name);
-    setToken(authToken);
-    setIsAuthenticated(true);
-    localStorage.setItem('userName', name);
-  };
-
-  const handleLogout = () => {
-    removeAuthToken();
-    localStorage.removeItem('userName');
-    setIsAuthenticated(false);
-    setUserName('');
-    setToken('');
-  };
-
   return (
-    <div className="App">
-      {isAuthenticated ? (
-        <Chat userName={userName} token={token} onLogout={handleLogout} />
-      ) : (
-        <Auth onLoginSuccess={handleLoginSuccess} />
-      )}
+    <div className="relative min-h-screen bg-deep-space overflow-x-hidden">
+      {/* Global Background Effects */}
+      <div className="fixed inset-0 pointer-events-none">
+        {/* Deep Space Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-background-primary via-background-secondary to-background-tertiary" />
+        
+        {/* Subtle Grid Pattern */}
+        <div 
+          className="absolute inset-0 opacity-[0.02]"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(0, 240, 255, 0.3) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(0, 240, 255, 0.3) 1px, transparent 1px)
+            `,
+            backgroundSize: '60px 60px',
+            backgroundPosition: '0 0'
+          }}
+        />
+        
+        {/* Ambient Glow Orbs */}
+        <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-accent-cyan/5 rounded-full filter blur-[120px] animate-pulse-slow" />
+        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-accent-magenta/5 rounded-full filter blur-[100px] animate-pulse-slow" style={{ animationDelay: '2s' }} />
+      </div>
+      
+      {/* Main Content */}
+      <div className="relative z-10">
+        <Router>
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/chat" element={<ChatPage />} />
+          </Routes>
+        </Router>
+      </div>
     </div>
   );
 }

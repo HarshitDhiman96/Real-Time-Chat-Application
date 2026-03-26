@@ -1,20 +1,247 @@
+@import "tailwindcss";
+
+/* Import Inter Variable Font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
 * {
-  margin: 0;
-  padding: 0;
+  margin-right: 5;
+  padding: 110;
   box-sizing: border-box;
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
+  letter-spacing: -0.02em; /* Tight tracking for body */
+  line-height: 1.5; /* 1.5x leading for body text */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  overflow-x: hidden;
+  background: linear-gradient(135deg, #0B0F19 0%, #0E1424 50%, #151D33 100%);
   min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: -0.04em; /* Tighter tracking for headlines */
 }
 
 #root {
   min-height: 100vh;
+}
+
+/* ============================================
+   GLASSMORPHISM UTILITIES
+   ============================================ */
+
+/* Base Glass Effect */
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Glass Variants */
+.glass-light {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.glass-dark {
+  background: rgba(11, 15, 25, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card {
+  background: rgba(21, 29, 51, 0.6); /* Surface Primary opacity */
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* Glass Panel (for larger surfaces) */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(48px);
+  -webkit-backdrop-filter: blur(48px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ============================================
+   PERFORMANCE OPTIMIZATIONS
+   ============================================ */
+
+/* Hardware Acceleration for Animated Elements */
+.will-animate {
+  will-change: transform, opacity;
+}
+
+/* Smooth Transforms */
+.transform-smooth {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* ============================================
+   NEON GLOW EFFECTS
+   ============================================ */
+
+.neon-cyan {
+  box-shadow: 
+    0 0 10px rgba(0, 240, 255, 0.5),
+    0 0 20px rgba(0, 240, 255, 0.3),
+    0 0 30px rgba(0, 240, 255, 0.2);
+}
+
+.neon-magenta {
+  box-shadow: 
+    0 0 10px rgba(181, 53, 246, 0.5),
+    0 0 20px rgba(181, 53, 246, 0.3),
+    0 0 30px rgba(181, 53, 246, 0.2);
+}
+
+.text-glow-cyan {
+  text-shadow: 
+    0 0 10px rgba(0, 240, 255, 0.5),
+    0 0 20px rgba(0, 240, 255, 0.3);
+}
+
+.text-glow-magenta {
+  text-shadow: 
+    0 0 10px rgba(181, 53, 246, 0.5),
+    0 0 20px rgba(181, 53, 246, 0.3);
+}
+
+/* ============================================
+   GRADIENT TEXT
+   ============================================ */
+
+.gradient-text {
+  background: linear-gradient(135deg, #00F0FF 0%, #B535F6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-cyan {
+  background: linear-gradient(135deg, #00F0FF 0%, #00C8FF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-magenta {
+  background: linear-gradient(135deg, #B535F6 0%, #9D25E8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ============================================
+   CUSTOM SCROLLBAR
+   ============================================ */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(8, 8, 12, 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(0, 240, 255, 0.3) 0%, rgba(181, 53, 246, 0.3) 100%);
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(0, 240, 255, 0.5) 0%, rgba(181, 53, 246, 0.5) 100%);
+}
+
+/* ============================================
+   PARTICLE & BURST EFFECTS
+   ============================================ */
+
+.particle {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 240, 255, 0.8) 0%, transparent 70%);
+}
+
+.star-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.8);
+}
+
+/* ============================================
+   RESPONSIVE UTILITIES
+   ============================================ */
+
+@media (max-width: 640px) {
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+}
+
+/* ============================================
+   ANIMATION HELPERS
+   ============================================ */
+
+/* Clip Path Wrapper for Text Reveals */
+.text-reveal-wrapper {
+  overflow: hidden;
+  display: inline-block;
+}
+
+/* Magnetic Element Base */
+.magnetic-element {
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Smooth Fade In */
+.fade-in {
+  animation: fadeIn 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* Futuristic Star Particles */
+.star-particle {
+  width: 6px;
+  height: 6px;
+  background: white;
+  border-radius: 2px; /* Slightly squared for a 'data shard' look */
+  box-shadow: 0 0 10px #00f0ff, 0 0 20px #b535f6;
+  filter: blur(0.5px);
+  z-index: 101;
+}
+
+/* Add a custom ease for the CSS pulse fallback */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.1); }
 }
 
