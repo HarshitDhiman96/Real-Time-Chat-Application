@@ -113,23 +113,23 @@ const MessageList = ({ messages, currentUser, typingUsers }) => {
           {/* Typing Indicator */}
           {typingUsers.length > 0 && (
             <div className="flex items-center gap-2 mb-6">
-              <div className="px-5 py-3 bg-[#151D33]/80 rounded-[20px] rounded-bl-[4px] border border-white/10 shadow-lg backdrop-blur-2xl">
+              <div className="px-5 py-3 bg-surface-container-high rounded-[20px] rounded-bl-sm border border-outline-variant/30 shadow-sm backdrop-blur-2xl">
                 <div className="flex items-center gap-3">
                   <div className="flex gap-1.5">
                     <span
-                      className="w-2 h-2 rounded-full bg-[#00E5FF] animate-bounce"
+                      className="w-2 h-2 rounded-full bg-primary animate-bounce"
                       style={{ animationDuration: '0.6s', animationDelay: '0s' }}
                     />
                     <span
-                      className="w-2 h-2 rounded-full bg-[#651FFF] animate-bounce"
+                      className="w-2 h-2 rounded-full bg-primary-dim animate-bounce"
                       style={{ animationDuration: '0.6s', animationDelay: '0.2s' }}
                     />
                     <span
-                      className="w-2 h-2 rounded-full bg-[#D500F9] animate-bounce"
+                      className="w-2 h-2 rounded-full bg-tertiary animate-bounce"
                       style={{ animationDuration: '0.6s', animationDelay: '0.4s' }}
                     />
                   </div>
-                  <span className="text-[13px] text-gray-400 font-semibold tracking-tight">
+                  <span className="text-[13px] text-on-surface-variant font-semibold tracking-tight">
                     {typingUsers.length === 1 
                       ? `${typingUsers[0]} is typing...`
                       : `${typingUsers.join(', ')} are typing...`
@@ -149,10 +149,10 @@ const MessageList = ({ messages, currentUser, typingUsers }) => {
         <button
           onClick={handleJumpToBottom}
           className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-[100] 
-                     px-6 py-3 bg-gradient-to-r from-[#651FFF]/90 to-[#00E5FF]/90 backdrop-blur-xl 
-                     border border-white/20 rounded-full 
-                     text-white font-bold text-[13px] tracking-tight
-                     shadow-[0_0_20px_rgba(0,229,255,0.4)] hover:shadow-[0_0_30px_rgba(0,229,255,0.6)] 
+                     px-6 py-3 bg-primary backdrop-blur-xl 
+                     border border-primary-dim rounded-full 
+                     text-on-primary font-bold text-[13px] tracking-tight
+                     shadow-md hover:shadow-lg hover:bg-primary-dim
                      transition-all duration-300 hover:scale-105
                      flex items-center gap-2 will-animate cursor-pointer"
         >

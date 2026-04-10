@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sanctuary | Chat</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#14007e",
+                        "on-background": "#32294f",
+                        "secondary-fixed-dim": "#bdbeff",
+                        "inverse-surface": "#10062d",
+                        "surface-container-high": "#e8deff",
+                        "surface-bright": "#faf4ff",
+                        "tertiary-dim": "#005c3d",
+                        "on-error-container": "#510017",
+                        "primary-fixed-dim": "#8885ff",
+                        "inverse-on-surface": "#a296c4",
+                        "tertiary": "#006947",
+                        "on-primary-fixed-variant": "#1a0099",
+                        "surface-container": "#ede4ff",
+                        "tertiary-container": "#69f6b8",
+                        "primary-container": "#9795ff",
+                        "on-primary-fixed": "#000000",
+                        "surface-container-highest": "#e2d7ff",
+                        "error-dim": "#a70138",
+                        "secondary": "#4647d3",
+                        "error-container": "#f74b6d",
+                        "tertiary-fixed": "#69f6b8",
+                        "on-secondary-container": "#2f2ebf",
+                        "on-tertiary-fixed": "#00452d",
+                        "on-tertiary": "#c8ffe0",
+                        "primary-dim": "#3d30d4",
+                        "outline": "#7b719c",
+                        "surface-container-low": "#f5eeff",
+                        "surface-tint": "#4a40e0",
+                        "on-tertiary-fixed-variant": "#006544",
+                        "on-secondary-fixed-variant": "#3a3ac8",
+                        "secondary-dim": "#3939c7",
+                        "on-secondary": "#f4f1ff",
+                        "on-surface": "#32294f",
+                        "background": "#faf4ff",
+                        "on-surface-variant": "#5f557f",
+                        "error": "#b41340",
+                        "surface-dim": "#dacdff",
+                        "primary-fixed": "#9795ff",
+                        "primary": "#4a40e0",
+                        "on-primary": "#f4f1ff",
+                        "outline-variant": "#b2a6d5",
+                        "secondary-fixed": "#cdcdff",
+                        "secondary-container": "#cdcdff",
+                        "surface": "#faf4ff",
+                        "tertiary-fixed-dim": "#58e7ab",
+                        "surface-variant": "#e2d7ff",
+                        "on-error": "#ffefef",
+                        "on-secondary-fixed": "#160bae",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-container": "#005a3c",
+                        "inverse-primary": "#8582ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(123, 113, 156, 0.2); border-radius: 10px; }
+        .glass-header { backdrop-filter: blur(24px); }
+    </style>
+</head>
+<body class="bg-background font-body text-on-background h-screen overflow-hidden">
+<!-- Main Layout Wrapper -->
+<div class="flex h-full w-full">
+<!-- SideNavBar - JSON Component Reference -->
+<aside class="hidden md:flex h-screen w-72 flex-col bg-slate-50 p-4 gap-2 border-r border-slate-200/20 shadow-sm z-30">
+<!-- User Profile (Top) -->
+<div class="flex items-center gap-3 px-2 mb-6">
+<div class="relative">
+<img alt="Alex Rivers" class="w-12 h-12 rounded-lg object-cover" data-alt="Close-up portrait of a professional man with short dark hair in a well-lit studio setting with soft background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwqQ6QoCB16IH8hU7iRjpPCribayW6TjxXLJAjrs2OO9Dw01NB-MH2cTOhAQ-V5IKtWKdBMrKXvmbXLidfylV2KRI-QfWBF42y80srZdfFzbR5Blth96873YJgL8XUoiKLPiAWRPtQDgPSeycG0R1xwfJG2QsK-bguom2eDs6DuUw72a022aOgQ9G45upYt_XewcTwOsl5Mm44TOoD99QN6YLAyUYhQVUfXIRcG7AQfSfsuqVfnjo4FhnTOgM8LqcjC0q9RWxt7cI"/>
+<div class="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-tertiary-fixed border-2 border-slate-50 rounded-full"></div>
+</div>
+<div class="flex flex-col">
+<span class="font-headline font-bold text-sm tracking-tight">Alex Rivers</span>
+<span class="text-xs text-on-surface-variant">Available</span>
+</div>
+</div>
+<!-- Search Bar -->
+<div class="relative mb-4 px-2">
+<span class="material-symbols-outlined absolute left-5 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">search</span>
+<input class="w-full bg-surface-container-high/50 border-none rounded-full py-2.5 pl-10 pr-4 text-xs font-medium focus:ring-2 focus:ring-primary/20 placeholder:text-on-surface-variant/60" placeholder="Search conversations..." type="text"/>
+</div>
+<!-- Navigation Items Mapping -->
+<nav class="flex-1 overflow-y-auto space-y-1">
+<!-- Messages (Active) -->
+<div class="bg-indigo-100/50 text-indigo-700 rounded-full px-4 py-3 flex items-center justify-between group cursor-pointer transition-all duration-300">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-indigo-600" style="font-variation-settings: 'FILL' 1;">chat_bubble</span>
+<span class="font-headline text-sm font-semibold">Messages</span>
+</div>
+<span class="bg-primary text-on-primary text-[10px] font-bold px-2 py-0.5 rounded-full">12</span>
+</div>
+<!-- Channels -->
+<div class="text-slate-500 hover:bg-slate-200/50 rounded-full px-4 py-3 flex items-center gap-3 cursor-pointer transition-all">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-headline text-sm font-medium">Channels</span>
+</div>
+<!-- Contacts -->
+<div class="text-slate-500 hover:bg-slate-200/50 rounded-full px-4 py-3 flex items-center gap-3 cursor-pointer transition-all">
+<span class="material-symbols-outlined">person_book</span>
+<span class="font-headline text-sm font-medium">Contacts</span>
+</div>
+<!-- Active Conversations List -->
+<div class="mt-8 px-2">
+<h3 class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant/50 mb-4 ml-2">Recent Chats</h3>
+<div class="space-y-4">
+<!-- Active Conversation Item -->
+<div class="flex items-center gap-3 p-2 rounded-2xl bg-white shadow-sm ring-1 ring-slate-100">
+<div class="relative">
+<img alt="Sarah Jenkins" class="w-10 h-10 rounded-full object-cover" data-alt="Portrait of a young woman with a friendly smile, natural lighting, wearing a stylish outfit against a blurred urban background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMTJpsO83knMzQtDjM09qmvZN9eSFC63WenxLh8nzc-OUhQp1NYZ3PEcWfBZyv-MrHKIEJfhiXKwMr9GgcchAsu5cr03c29hwTH8T6iO5koopDAV5u3Cc-AWPMCPdszgxT1IsMJP07Aw1IdeMmwLT-PDm0ohtWCKrPp1cxiIcp65BccnNQOcsBEQ87yHcljNpOeTh8If-zhqr4-ZH0Z5emxY_0mvz4_RxU3HT1uQByy0Sy3yuOkbpL2Y4_hl-eD03wDN9Mn018Gkw"/>
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-tertiary-fixed border-2 border-white rounded-full"></div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline">
+<span class="font-headline font-bold text-xs truncate">Sarah Jenkins</span>
+<span class="text-[9px] text-on-surface-variant font-medium">2m</span>
+</div>
+<p class="text-[11px] text-primary font-semibold truncate italic">Typing...</p>
+</div>
+</div>
+<!-- Conversation Item -->
+<div class="flex items-center gap-3 p-2 rounded-2xl hover:bg-slate-100/50 transition-colors cursor-pointer">
+<div class="relative">
+<img alt="Julian Wan" class="w-10 h-10 rounded-full object-cover" data-alt="Close up portrait of a man with glasses and a beard smiling warmly in a bright indoor setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuABouUX52T2rMNdCKgHmxkKmj7sGu4IaTOxAvKmLbaGZdBGoHn6fySuQFV0Im9uy4VIaiy4V3kzS4zObudBqQqpsa7QWzkdtXByjEvrQm7d6zEKNvPF9oCvCA5FX29Y6HWYBmVNQFPw7Zp5bDmLLzVxd4hZmy2SFAEQw1wI-n1UKxsmnLVv2qfdGE3DygBO11YCcxoxjlhDRo2Yx01LLKUd2kPCc4ZHaltwPmyrK3uLILcYBvEuoUfxz74zZdtkdgV5h5f4mJ-YsMI"/>
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-tertiary-fixed border-2 border-slate-50 rounded-full"></div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline">
+<span class="font-headline font-semibold text-xs truncate text-on-surface">Julian Wan</span>
+<span class="text-[9px] text-on-surface-variant font-medium">1h</span>
+</div>
+<p class="text-[11px] text-on-surface-variant truncate">The project is looking great!</p>
+</div>
+</div>
+</div>
+</div>
+</nav>
+<!-- Footer Section -->
+<div class="mt-auto pt-4 border-t border-slate-200/50">
+<div class="text-slate-500 hover:bg-slate-200/50 rounded-full px-4 py-3 flex items-center gap-3 cursor-pointer transition-all">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-headline text-sm font-medium">Settings</span>
+</div>
+<div class="text-error hover:bg-red-50 rounded-full px-4 py-3 flex items-center gap-3 cursor-pointer transition-all">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-headline text-sm font-medium">Sign Out</span>
+</div>
+</div>
+</aside>
+<!-- Main Chat Window -->
+<main class="flex-1 flex flex-col relative bg-surface">
+<!-- TopAppBar Reference -->
+<header class="glass-header sticky top-0 w-full z-40 bg-white/80 dark:bg-slate-900/80 px-6 py-4 flex justify-between items-center shadow-sm">
+<div class="flex items-center gap-4">
+<button class="md:hidden p-2 -ml-2 rounded-full hover:bg-slate-100">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div class="relative">
+<img alt="Sarah Jenkins" class="w-10 h-10 rounded-full object-cover ring-2 ring-primary-container" data-alt="Portrait of a young woman with a friendly smile, natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjL9f3pGsEuHPr05eq7Aoq1K-zNM33YPG5nlJn1FtJD5q2UWTKpXxsMjDX4_B9pNvUjQuCHZ51hGCYLdXgBiQXK-7pSGvE3yhrBLHy0ONZ33u_U7wTKpIwsU-J3mn6QgvWKahJ0WZgdUrImddC2QyE9wqH2ND9KTSDfBQR6_U3OTNfdxfzx3D7B1GI684VEhi7QSuGsTuwhm4tXapavtNSUkF5JOhw4ZUUnSBPrTc-CmQVMUqFj8fEs3D-7FrEnbe8pADnQ21-t1Y"/>
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-tertiary-fixed border-2 border-white rounded-full"></div>
+</div>
+<div class="flex flex-col">
+<h2 class="font-headline text-lg font-bold text-on-surface tracking-tight">Sarah Jenkins</h2>
+<div class="flex items-center gap-1.5">
+<span class="text-[10px] font-semibold text-tertiary tracking-wide uppercase">Active Now</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2.5 rounded-full text-on-surface-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined">videocam</span>
+</button>
+<button class="p-2.5 rounded-full text-on-surface-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined">call</span>
+</button>
+<button class="p-2.5 rounded-full text-on-surface-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined">info</span>
+</button>
+</div>
+</header>
+<!-- Message Area -->
+<section class="flex-1 overflow-y-auto px-6 py-8 space-y-8 flex flex-col">
+<!-- Date Separator -->
+<div class="flex justify-center">
+<span class="px-3 py-1 bg-surface-container text-[10px] font-bold uppercase tracking-widest text-on-surface-variant rounded-full">Today</span>
+</div>
+<!-- Received Message Group -->
+<div class="flex flex-col gap-1 max-w-[80%]">
+<div class="flex items-end gap-3">
+<div class="bg-surface-container-high text-on-surface p-4 rounded-xl rounded-bl-sm shadow-sm">
+<p class="text-sm leading-relaxed">Hey Alex! Have you had a chance to look at the new Sanctuary brand guidelines yet? I'm curious what you think about the tonal layering approach.</p>
+</div>
+</div>
+<span class="text-[10px] text-on-surface-variant ml-2 mt-1">10:42 AM</span>
+</div>
+<!-- Sent Message Group -->
+<div class="flex flex-col gap-1 max-w-[80%] self-end items-end">
+<div class="bg-gradient-to-br from-primary to-primary-dim text-on-primary p-4 rounded-xl rounded-br-sm shadow-md">
+<p class="text-sm leading-relaxed">Yes! I absolutely love the "No-Line" rule. It makes the whole UI feel much more fluid and modern. Already starting to apply it to the main dashboard.</p>
+</div>
+<div class="flex items-center gap-1.5 mt-1 mr-2">
+<span class="text-[10px] text-on-surface-variant">10:45 AM</span>
+<span class="material-symbols-outlined text-sm text-primary" style="font-variation-settings: 'wght' 700;">done_all</span>
+</div>
+</div>
+<!-- Received Message Group -->
+<div class="flex flex-col gap-1 max-w-[80%]">
+<div class="bg-surface-container-high text-on-surface p-4 rounded-xl rounded-bl-sm shadow-sm">
+<p class="text-sm leading-relaxed">Exactly! The depth feels so much more natural without those harsh 1px borders. Are you sticking with the Manrope for all the headers?</p>
+</div>
+<span class="text-[10px] text-on-surface-variant ml-2 mt-1">10:47 AM</span>
+</div>
+<!-- Typing Indicator -->
+<div class="flex items-center gap-3 ml-2">
+<div class="flex gap-1.5 px-3 py-2 bg-surface-container-low rounded-full">
+<div class="w-1.5 h-1.5 bg-primary/40 rounded-full animate-bounce"></div>
+<div class="w-1.5 h-1.5 bg-primary/40 rounded-full animate-bounce" style="animation-delay: 0.2s;"></div>
+<div class="w-1.5 h-1.5 bg-primary/40 rounded-full animate-bounce" style="animation-delay: 0.4s;"></div>
+</div>
+<span class="text-[11px] font-medium text-on-surface-variant italic">Sarah is typing...</span>
+</div>
+</section>
+<!-- Bottom Input Bar -->
+<footer class="p-6 bg-surface">
+<div class="max-w-4xl mx-auto flex items-center gap-3">
+<!-- Actions -->
+<div class="flex items-center gap-1">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined">add_circle</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined">mood</span>
+</button>
+</div>
+<!-- Input Pill -->
+<div class="flex-1 relative flex items-center">
+<input class="w-full bg-surface-container-highest/80 border-none rounded-full py-4 px-6 text-sm focus:ring-4 focus:ring-primary/10 placeholder:text-on-surface-variant/60" placeholder="Type a message..." type="text"/>
+<div class="absolute right-3 flex items-center gap-2">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined">mic</span>
+</button>
+</div>
+</div>
+<!-- Send Button -->
+<button class="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary-dim text-white shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all">
+<span class="material-symbols-outlined ml-0.5" style="font-variation-settings: 'FILL' 1;">send</span>
+</button>
+</div>
+</footer>
+</main>
+<!-- Right Side Context (Threads/Profile Info) - Asymmetric Layout -->
+<aside class="hidden lg:flex w-80 h-screen flex-col bg-surface-container-low/30 p-6 border-l border-slate-200/20">
+<div class="flex flex-col items-center text-center mt-8">
+<img alt="Sarah Jenkins" class="w-24 h-24 rounded-3xl object-cover mb-4 ring-4 ring-white shadow-xl" data-alt="Close-up professional headshot of a young woman with a friendly expression, natural lighting, soft focus bokeh background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQpzS_Sbssl87QV0qd5V8bvHWE6AKrgYagMnRA-6GHI3L6vIHIJiYh08lukVcd9pp7U0YGEfq5Gqo3uEXLJ2F3rdFkhBHnmo0HoRc91ZbXiq6k6-MTj1I8QiVadlqfOZqXaGfbLZL80HCHZJAqYZKLpyIuViyOpwHu5sZndN6GIsZ2JbYRUR4aAGzcxo1S7nsMGHtAgG6kXQ858dR910bNRrgBm5ZpasBACXDBf-AZyDn3WzlNjGrNwSIhx4Q-JXPbPgd9tIlZTQQ"/>
+<h3 class="font-headline text-xl font-bold text-on-surface">Sarah Jenkins</h3>
+<p class="text-sm text-on-surface-variant font-medium">Lead UI Designer</p>
+<div class="mt-4 flex gap-2">
+<span class="px-3 py-1 bg-tertiary-container text-on-tertiary-container text-[10px] font-bold rounded-full">TEAM</span>
+<span class="px-3 py-1 bg-primary-container text-on-primary-container text-[10px] font-bold rounded-full">DESIGN</span>
+</div>
+</div>
+<div class="mt-12 space-y-6">
+<div>
+<h4 class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant/50 mb-3">Shared Files</h4>
+<div class="space-y-2">
+<div class="flex items-center gap-3 p-3 bg-white rounded-2xl shadow-sm border border-slate-100 cursor-pointer hover:border-primary/20 transition-all">
+<div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">description</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-xs font-bold truncate">Brand_Guide_v2.pdf</p>
+<p class="text-[10px] text-on-surface-variant">4.2 MB • Oct 24</p>
+</div>
+</div>
+<div class="flex items-center gap-3 p-3 bg-white rounded-2xl shadow-sm border border-slate-100 cursor-pointer hover:border-primary/20 transition-all">
+<div class="w-10 h-10 rounded-xl bg-tertiary/10 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">image</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-xs font-bold truncate">Hero_Concept.png</p>
+<p class="text-[10px] text-on-surface-variant">12.5 MB • Oct 23</p>
+</div>
+</div>
+</div>
+</div>
+<div>
+<h4 class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant/50 mb-3">Settings</h4>
+<ul class="space-y-1">
+<li class="flex justify-between items-center px-2 py-2 text-xs font-medium text-on-surface hover:bg-slate-100 rounded-lg cursor-pointer">
+<span>Mute Notifications</span>
+<div class="w-8 h-4 bg-slate-200 rounded-full relative">
+<div class="absolute left-1 top-1 w-2 h-2 bg-white rounded-full"></div>
+</div>
+</li>
+<li class="flex justify-between items-center px-2 py-2 text-xs font-medium text-on-surface hover:bg-slate-100 rounded-lg cursor-pointer">
+<span>Search in Conversation</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</li>
+<li class="flex justify-between items-center px-2 py-2 text-xs font-medium text-error hover:bg-red-50 rounded-lg cursor-pointer">
+<span>Block Sarah Jenkins</span>
+</li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</body></html>

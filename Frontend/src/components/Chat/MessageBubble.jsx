@@ -34,8 +34,8 @@ const MessageBubble = ({ message, currentUser }) => {
           opacity: 1, 
           scale: 1, 
           y: 0,
-          duration: 0.7,
-          ease: "back.out(1.5)",
+          duration: 0.6,
+          ease: "back.out(1.2)",
           delay: isOwnMessage ? 0 : 0.05 // Slight delay for incoming messages
         }
       );
@@ -59,7 +59,7 @@ const MessageBubble = ({ message, currentUser }) => {
   if (isSystemMessage) {
     return (
       <div ref={bubbleRef} className="flex justify-center my-6">
-        <div className="px-5 py-2 bg-[#151D33]/50 border border-white/10 rounded-full text-gray-400 text-[13px] font-medium backdrop-blur-md shadow-lg">
+        <div className="px-5 py-2 bg-surface-container-low border border-outline-variant/20 rounded-full text-on-surface-variant text-[13px] font-medium shadow-sm">
           {message.text}
         </div>
       </div>
@@ -76,7 +76,7 @@ const MessageBubble = ({ message, currentUser }) => {
         {!isOwnMessage && (
           <div 
             ref={usernameRef}
-            className="text-[13px] font-semibold text-gray-300 mb-1.5 ml-1 tracking-tight"
+            className="text-[13px] font-semibold text-on-surface-variant mb-1.5 ml-1 tracking-tight"
           >
             {message.userName}
           </div>
@@ -84,10 +84,10 @@ const MessageBubble = ({ message, currentUser }) => {
         
         {/* Message Bubble */}
         <div
-          className={`px-6 py-4 shadow-xl backdrop-blur-2xl transition-all will-animate ${
+          className={`px-6 py-4 shadow-sm transition-all will-animate font-body ${
             isOwnMessage
-              ? 'bg-gradient-to-br from-[#651FFF] to-[#00E5FF] text-white rounded-[24px] rounded-br-[6px] shadow-[0_4px_20px_rgba(0,229,255,0.2)]'
-              : 'bg-[#151D33]/80 text-gray-100 border border-white/10 rounded-[24px] rounded-bl-[6px] hover:border-white/20 hover:bg-[#151D33]/90'
+              ? 'bg-primary text-on-primary rounded-[20px] rounded-br-sm'
+              : 'bg-surface-container-high text-on-surface border border-outline-variant/30 rounded-[20px] rounded-bl-sm hover:bg-surface-variant'
           }`}
         >
           <p className="text-[15px] leading-relaxed whitespace-pre-wrap break-words tracking-tight">
@@ -96,7 +96,7 @@ const MessageBubble = ({ message, currentUser }) => {
         </div>
 
         {/* Timestamp */}
-        <div className={`text-[11px] font-medium text-gray-500 mt-2 ${isOwnMessage ? 'text-right mr-2' : 'ml-2'}`}>
+        <div className={`text-[11px] font-medium text-on-surface-variant/70 mt-2 ${isOwnMessage ? 'text-right mr-2' : 'ml-2'}`}>
           {new Date(message.timestamp).toLocaleTimeString([], { 
             hour: '2-digit', 
             minute: '2-digit' 

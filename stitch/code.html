@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#14007e",
+                        "on-background": "#32294f",
+                        "secondary-fixed-dim": "#bdbeff",
+                        "inverse-surface": "#10062d",
+                        "surface-container-high": "#e8deff",
+                        "surface-bright": "#faf4ff",
+                        "tertiary-dim": "#005c3d",
+                        "on-error-container": "#510017",
+                        "primary-fixed-dim": "#8885ff",
+                        "inverse-on-surface": "#a296c4",
+                        "tertiary": "#006947",
+                        "on-primary-fixed-variant": "#1a0099",
+                        "surface-container": "#ede4ff",
+                        "tertiary-container": "#69f6b8",
+                        "primary-container": "#9795ff",
+                        "on-primary-fixed": "#000000",
+                        "surface-container-highest": "#e2d7ff",
+                        "error-dim": "#a70138",
+                        "secondary": "#4647d3",
+                        "error-container": "#f74b6d",
+                        "tertiary-fixed": "#69f6b8",
+                        "on-secondary-container": "#2f2ebf",
+                        "on-tertiary-fixed": "#00452d",
+                        "on-tertiary": "#c8ffe0",
+                        "primary-dim": "#3d30d4",
+                        "outline": "#7b719c",
+                        "surface-container-low": "#f5eeff",
+                        "surface-tint": "#4a40e0",
+                        "on-tertiary-fixed-variant": "#006544",
+                        "on-secondary-fixed-variant": "#3a3ac8",
+                        "secondary-dim": "#3939c7",
+                        "on-secondary": "#f4f1ff",
+                        "on-surface": "#32294f",
+                        "background": "#faf4ff",
+                        "on-surface-variant": "#5f557f",
+                        "error": "#b41340",
+                        "surface-dim": "#dacdff",
+                        "primary-fixed": "#9795ff",
+                        "primary": "#4a40e0",
+                        "on-primary": "#f4f1ff",
+                        "outline-variant": "#b2a6d5",
+                        "secondary-fixed": "#cdcdff",
+                        "secondary-container": "#cdcdff",
+                        "surface": "#faf4ff",
+                        "tertiary-fixed-dim": "#58e7ab",
+                        "surface-variant": "#e2d7ff",
+                        "on-error": "#ffefef",
+                        "on-secondary-fixed": "#160bae",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-container": "#005a3c",
+                        "inverse-primary": "#8582ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body antialiased">
+<!-- TopNavBar Component -->
+<nav class="fixed top-0 w-full z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-sm dark:shadow-none">
+<div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold tracking-tighter text-indigo-700 dark:text-indigo-300 font-headline">Sanctuary</span>
+<div class="hidden md:flex gap-6 font-manrope text-sm font-semibold tracking-tight">
+<a class="text-indigo-700 dark:text-indigo-300 border-b-2 border-indigo-500 transition-colors duration-200" href="#">Product</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-indigo-500 transition-colors duration-200" href="#">Solutions</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-indigo-500 transition-colors duration-200" href="#">Pricing</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="font-manrope text-sm font-semibold text-slate-600 hover:text-indigo-500 transition-colors duration-200">Login</button>
+<button class="bg-primary text-on-primary px-6 py-2.5 rounded-full font-manrope text-sm font-semibold tracking-tight hover:opacity-90 scale-95 active:duration-100 transition-all">Get Started</button>
+</div>
+</div>
+</nav>
+<!-- Hero Section -->
+<main class="pt-32 pb-20 px-6 relative overflow-hidden">
+<!-- Ambient Decorative Background -->
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-gradient-to-b from-primary/10 to-transparent rounded-full blur-3xl -z-10"></div>
+<div class="max-w-7xl mx-auto text-center">
+<div class="inline-flex items-center gap-2 bg-surface-container-low px-4 py-2 rounded-full mb-8">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+<span class="text-xs font-bold text-on-surface-variant font-headline tracking-wider uppercase">Live Real-Time Messaging</span>
+</div>
+<h1 class="text-5xl md:text-7xl font-extrabold font-headline tracking-tighter text-on-background mb-6 max-w-4xl mx-auto leading-[1.1]">
+                Connect <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-container">instantly</span>, everywhere.
+            </h1>
+<p class="text-lg md:text-xl text-on-surface-variant max-w-2xl mx-auto mb-10 leading-relaxed">
+                Elevate your team's synergy with our high-end, editorial-inspired communication sanctuary. Real-time collaboration reimagined for modern workflows.
+            </p>
+<div class="flex flex-col sm:flex-row justify-center gap-4 mb-20">
+<button class="bg-gradient-to-r from-primary to-primary-dim text-white px-10 py-4 rounded-xl font-headline font-bold text-lg shadow-xl shadow-primary/20 hover:scale-[1.02] transition-transform">
+                    Start Chatting for Free
+                </button>
+<button class="bg-surface-container-highest text-on-surface px-10 py-4 rounded-xl font-headline font-bold text-lg hover:bg-surface-variant transition-colors">
+                    View Demo
+                </button>
+</div>
+<!-- UI Mockup Section (Bento Inspired) -->
+<div class="relative max-w-6xl mx-auto bg-surface-container-low p-4 rounded-[3.5rem] shadow-2xl">
+<div class="bg-white rounded-[2.5rem] overflow-hidden shadow-inner aspect-[16/9] flex relative">
+<!-- Sidebar Mockup -->
+<div class="w-64 bg-surface-container-low hidden md:flex flex-col p-6 text-left border-r border-outline-variant/15">
+<div class="flex items-center gap-3 mb-8">
+<div class="w-10 h-10 rounded-full bg-primary-container"></div>
+<div>
+<div class="text-sm font-bold font-headline">Sarah Jenkins</div>
+<div class="text-[10px] text-tertiary font-bold uppercase tracking-widest">Active Now</div>
+</div>
+</div>
+<div class="space-y-4">
+<div class="h-8 bg-surface-container-highest rounded-full w-full"></div>
+<div class="h-8 bg-primary/10 rounded-full w-[90%]"></div>
+<div class="h-8 bg-surface-container-highest rounded-full w-full"></div>
+</div>
+</div>
+<!-- Main Chat Mockup -->
+<div class="flex-1 bg-surface flex flex-col p-8 relative">
+<div class="flex flex-col gap-6 mb-auto overflow-hidden">
+<!-- Received Message -->
+<div class="flex gap-4 max-w-[80%]">
+<div class="w-8 h-8 rounded-full bg-secondary-container shrink-0"></div>
+<div class="bg-surface-container-high p-4 rounded-xl rounded-bl-sm text-sm text-left">
+                                    Hey team! Just finished the final review of the Sanctuary design system. The glass effects are looking sharp.
+                                </div>
+</div>
+<!-- Sent Message -->
+<div class="flex gap-4 max-w-[80%] self-end flex-row-reverse">
+<div class="w-8 h-8 rounded-full bg-primary shrink-0"></div>
+<div class="bg-gradient-to-br from-primary to-primary-dim p-4 rounded-xl rounded-br-sm text-sm text-white text-left">
+                                    That's great news! I love the tonal depth. Let's push to staging. 🚀
+                                </div>
+</div>
+<!-- Received Message -->
+<div class="flex gap-4 max-w-[80%]">
+<div class="w-8 h-8 rounded-full bg-tertiary-container shrink-0"></div>
+<div class="bg-surface-container-high p-4 rounded-xl rounded-bl-sm text-sm text-left">
+                                    Agreed. The real-time sync is feeling incredibly fluid today.
+                                </div>
+</div>
+</div>
+<!-- Input Bar Mockup -->
+<div class="mt-8 bg-surface-container-highest rounded-full py-3 px-6 flex items-center justify-between shadow-sm">
+<span class="text-on-surface-variant text-sm">Write a message...</span>
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-outline">attach_file</span>
+<span class="material-symbols-outlined text-primary">send</span>
+</div>
+</div>
+</div>
+<!-- Floating Detail Panel (Asymmetric touch) -->
+<div class="absolute right-12 top-12 w-48 glass-panel p-4 rounded-2xl shadow-xl hidden lg:block">
+<div class="text-[10px] font-bold text-outline uppercase mb-2 tracking-widest">Shared Files</div>
+<div class="space-y-2">
+<div class="flex items-center gap-2 p-2 hover:bg-white rounded-lg transition-colors">
+<span class="material-symbols-outlined text-primary text-lg">description</span>
+<span class="text-[10px] font-medium">brand-guide.pdf</span>
+</div>
+<div class="flex items-center gap-2 p-2 hover:bg-white rounded-lg transition-colors">
+<span class="material-symbols-outlined text-tertiary text-lg">image</span>
+<span class="text-[10px] font-medium">hero-concept.png</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Features Section (Bento Grid Style) -->
+<section class="py-24 bg-white">
+<div class="max-w-7xl mx-auto px-6">
+<div class="grid md:grid-cols-3 gap-8">
+<!-- Feature 1 -->
+<div class="bg-surface-container-low p-10 rounded-[3rem] hover:bg-surface-container transition-colors group">
+<div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-8 shadow-sm group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary text-3xl">sync</span>
+</div>
+<h3 class="text-2xl font-bold font-headline text-on-background mb-4">Real-time sync</h3>
+<p class="text-on-surface-variant leading-relaxed">
+                        Messages delivered at the speed of thought. Our globally distributed architecture ensures zero-latency communication.
+                    </p>
+</div>
+<!-- Feature 2 -->
+<div class="bg-surface-container-low p-10 rounded-[3rem] hover:bg-surface-container transition-colors group">
+<div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-8 shadow-sm group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary text-3xl">encrypted</span>
+</div>
+<h3 class="text-2xl font-bold font-headline text-on-background mb-4">End-to-end encryption</h3>
+<p class="text-on-surface-variant leading-relaxed">
+                        Security is our priority. Every syllable shared in your sanctuary is locked with military-grade protocols.
+                    </p>
+</div>
+<!-- Feature 3 -->
+<div class="bg-surface-container-low p-10 rounded-[3rem] hover:bg-surface-container transition-colors group">
+<div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-8 shadow-sm group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary text-3xl">fiber_manual_record</span>
+</div>
+<h3 class="text-2xl font-bold font-headline text-on-background mb-4">Online status</h3>
+<p class="text-on-surface-variant leading-relaxed">
+                        Know who's around with breathing active indicators. Gentle status updates that don't disrupt your focus.
+                    </p>
+</div>
+</div>
+</div>
+</section>
+<!-- Social Proof / Logo Cloud -->
+<section class="py-16 bg-background">
+<div class="max-w-7xl mx-auto px-6 text-center">
+<p class="text-sm font-headline font-bold text-outline uppercase tracking-[0.2em] mb-12">Trusted by visionary teams</p>
+<div class="flex flex-wrap justify-center items-center gap-12 md:gap-20 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+<span class="text-2xl font-bold font-headline">LUMINA</span>
+<span class="text-2xl font-bold font-headline">QUANTUM</span>
+<span class="text-2xl font-bold font-headline">NEBULOUS</span>
+<span class="text-2xl font-bold font-headline">ATLAS.AI</span>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-slate-50 dark:bg-slate-950 w-full py-12 px-6 border-t border-slate-200/50 dark:border-slate-800/50">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="flex flex-col items-center md:items-start gap-4">
+<span class="text-sm font-bold text-slate-900 dark:text-white">Sanctuary Inc.</span>
+<p class="font-inter text-xs text-slate-500">© 2024 Sanctuary Inc. All rights reserved.</p>
+</div>
+<div class="flex gap-8">
+<a class="font-inter text-xs text-slate-500 hover:text-indigo-500 hover:underline transition-all" href="#">Privacy Policy</a>
+<a class="font-inter text-xs text-slate-500 hover:text-indigo-500 hover:underline transition-all" href="#">Terms of Service</a>
+<a class="font-inter text-xs text-slate-500 hover:text-indigo-500 hover:underline transition-all" href="#">Contact Us</a>
+</div>
+<div class="flex gap-6">
+<a class="text-slate-400 hover:text-indigo-500 transition-colors" href="#">
+<span class="material-symbols-outlined">public</span>
+</a>
+<a class="text-slate-400 hover:text-indigo-500 transition-colors" href="#">
+<span class="material-symbols-outlined">alternate_email</span>
+</a>
+<a class="text-slate-400 hover:text-indigo-500 transition-colors" href="#">
+<span class="material-symbols-outlined">share</span>
+</a>
+</div>
+</div>
+</footer>
+</body></html>

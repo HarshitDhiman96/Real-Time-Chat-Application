@@ -1,263 +1,183 @@
-import { motion } from 'framer-motion';
-import { MessageCircle, Send, Zap, Shield, Sparkles } from 'lucide-react';
+import { useRef } from 'react';
 import { Link } from 'react-router-dom';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
 
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.2
-    }
-  }
-};
-
-const itemVariant = {
-  hidden: { opacity: 0, y: 30 },
-  show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 400, damping: 20 } }
-};
+gsap.registerPlugin(useGSAP);
 
 const Hero = () => {
+  const container = useRef();
+
+  useGSAP(() => {
+    gsap.from('.hero-content > *', {
+      y: 30,
+      opacity: 0,
+      duration: 0.8,
+      stagger: 0.15,
+      ease: 'power2.out',
+      delay: 0.2,
+    });
+
+    gsap.from('.hero-mockup', {
+      y: 24,
+      opacity: 0,
+      scale: 0.98,
+      duration: 0.8,
+      ease: 'power2.out',
+      delay: 0.4,
+    });
+  }, { scope: container });
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0B0F19] pt-20">
-      {/* Animated Background Grid */}
-      <div 
-        className="absolute inset-0 opacity-20"
-        style={{
-          backgroundImage: `radial-gradient(circle at 1px 1px, rgba(213, 0, 249, 0.25) 1px, transparent 0)`,
-          backgroundSize: '48px 48px'
-        }}
-      />
+    <section ref={container} className="pt-32 pb-20 px-6 relative overflow-hidden bg-background">
+      <div className="max-w-7xl mx-auto text-center hero-content">
+        <div className="inline-flex items-center gap-2 bg-surface-container-low px-4 py-2 rounded-full mb-8">
+          <span className="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+          <span className="text-xs font-bold text-on-surface-variant font-headline tracking-wider uppercase">Live Real-Time Messaging</span>
+        </div>
 
-      {/* Cyber Purple & Electric Blue Glow Effects */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.15, 0.25, 0.15],
-          }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[-10%] left-[10%] w-[600px] h-[600px] bg-[#D500F9] rounded-full filter blur-[120px]"
-        />
-        <motion.div
-          animate={{
-            scale: [1, 1.3, 1],
-            opacity: [0.15, 0.25, 0.15],
-          }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className="absolute bottom-[-10%] right-[10%] w-[600px] h-[600px] bg-[#00E5FF] rounded-full filter blur-[120px]"
-        />
-      </div>
+        <h1 className="text-5xl md:text-7xl font-extrabold font-headline tracking-tighter text-on-background mb-6 max-w-4xl mx-auto leading-[1.1]">
+          Connect <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary via-indigo-600 to-purple-600 font-black">instantly</span>, everywhere.
+        </h1>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left Side - Content */}
-          <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-100px" }}
-            className="text-left"
-          >
-            <motion.div
-              variants={itemVariant}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-white/10 mb-8"
-            >
-              <Sparkles className="w-4 h-4 text-[#00E5FF]" />
-              <span className="text-sm font-semibold tracking-tight text-gray-300">The Future of AI Chat</span>
-            </motion.div>
+        <p className="text-lg md:text-xl text-on-surface-variant max-w-2xl mx-auto mb-10 leading-relaxed">
+          Elevate your team's synergy with a clean real-time chat room for focused conversations, active users, and instant replies.
+        </p>
 
-            <motion.h1 variants={itemVariant} className="text-5xl md:text-7xl lg:text-7xl xl:text-[90px] font-extrabold mb-8 leading-[1.05] tracking-tighter">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#D500F9] to-[#00E5FF]">
-                Real-Time
-              </span>
-              <br />
-              <span className="text-white">
-                Conversations.
-              </span>
-              <br />
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#00E5FF] to-[#D500F9]">
-                Zero Delay.
-              </span>
-            </motion.h1>
+        <div className="flex flex-col sm:flex-row justify-center gap-4 mb-20">
+          <Link to="/register" className="bg-gradient-to-r from-primary to-primary-dim text-on-primary px-10 py-4 rounded-[8px] font-headline font-bold text-lg shadow-xl shadow-primary/20 hover:scale-[1.02] transition-transform">
+            Start Chatting for Free
+          </Link>
+          <Link to="/login" className="bg-surface-container-highest text-on-surface px-10 py-4 rounded-[8px] font-headline font-bold text-lg hover:bg-surface-variant transition-colors">
+            View Demo
+          </Link>
+        </div>
+
+        <div className="flex items-center justify-center gap-4 mb-16">
+          <div className="flex -space-x-3">
+            <img className="w-12 h-12 rounded-full border-2 border-surface object-cover shadow-sm" alt="User 1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKttQ0zT2TOVrjc8oF5HWJMxGYkaOIewmIun2SgIxTRgo1uc1NQdMimXikLa4Hxt9oDZ412zd7Kj8a7tmQMrL0DKmNLZ9TU15_Ulcpm_b1eWwOJd6MoCP9KubSr5Vf5f3_1nJpPSgnLNpHRd_ftJM9PBzxixQ5YVXQkzAU4yV9uryWzK-iGt6Lsj9ZRlSW_JcWhb--GFWMQLM6u5uEk0bs7le-EIw1QliBUtftsyM0AoHJu9RzZXi66NJwaA-5G3DRN0QmLMrRKjQ" />
+            <img className="w-12 h-12 rounded-full border-2 border-surface object-cover shadow-sm" alt="User 2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdo3J1GexqeCYOh-32Z9HjPOZtHwH8E2nElweF9WVODFHSjJWlzygT7ICFYbwo7qWFoqzKZGdtS4BOzwoWNnSEK8jcY2ivo0vbJFg3DO4O8e6IKoRadEx8j4xSMCE566sLEpju3vW40pbMPC9V6AELV5U7WTRuJTKcGWDP_lLlVq25cEK0CflWwBKeU8NKVGPzUHo15SGE4V0Bf3RTQOqrTzbU4aj-Jt3_52k9TTr7uNTtaEP27rcpbGGQ3QJ22Nk5Pg5h6XJXFgs" />
+            <img className="w-12 h-12 rounded-full border-2 border-surface object-cover shadow-sm" alt="User 3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXGWobZ0u7uK8FYYNTzFqiZXQpaQNZaxQwvdSs9F0NqCABxjCC-9BPh6wKihIUF10pkgcqvNRl-IRvXPtL9y_5iEYXubqpJGC6ZRtcAeQoJ-h8ip2QttNYGdaTKZW7KPLhaSDTyVzgnDFqykDZctqkxDwns0B6bn75UqTHzbNeBT1WiYGeLjI-dBrNI2b6elaOOF4_NHKEKIaGaZiXMtN4V6Kh5HFt7-w3LQItkG9oU76ZiAXiOzDH6RITLVXl43UK4jF6Q3nDReM" />
+          </div>
+          <span className="text-on-surface-variant font-label text-sm font-semibold tracking-wide">Joined by 10k+ professionals</span>
+        </div>
+
+        <div className="relative flex justify-center w-full mt-24">
+          <div className="relative z-10 w-full max-w-5xl rounded-3xl p-3 bg-surface-container-low border border-outline-variant/20 shadow-2xl shadow-primary/20 backdrop-blur-xl">
+            {/* Window controls */}
+            <div className="flex items-center gap-2 px-4 pb-3 pt-1 border-b border-outline-variant/10">
+              <div className="w-3 h-3 rounded-full bg-red-400"></div>
+              <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
+              <div className="w-3 h-3 rounded-full bg-green-400"></div>
+              <div className="ml-4 text-xs font-medium text-on-surface-variant font-headline tracking-widest flex items-center gap-2"><img src="/fluxchat_logo.png" className="w-4 h-4 rounded" /> FLUXCHAT WORKSPACE</div>
+            </div>
             
-            <motion.p variants={itemVariant} className="text-xl md:text-2xl text-gray-400 mb-12 max-w-2xl leading-relaxed tracking-tight">
-              Experience lightning-fast messaging with our next-generation visual platform. 
-              Beautiful, secure, and built for modern communities.
-            </motion.p>
-
-            <motion.div variants={itemVariant} className="flex flex-col sm:flex-row gap-6 mb-16">
-              <Link
-                to="/register"
-                className="group flex-1 sm:flex-none inline-flex items-center justify-center gap-3 px-12 py-6 bg-gradient-to-r from-[#00E5FF] to-[#D500F9] text-white rounded-[24px] font-extrabold text-xl shadow-[0_0_25px_rgba(0,229,255,0.4)] hover:shadow-[0_0_45px_rgba(213,0,249,0.5)] hover:scale-[1.02] transition-all duration-300 tracking-tight border border-white/20"
-              >
-                Get Started Free
-                <Send className="w-6 h-6 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-              </Link>
-              
-              <Link
-                to="/login"
-                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-3 px-12 py-6 glass-dark text-white rounded-[24px] font-extrabold text-xl hover:bg-white/10 hover:border-white/20 transition-all duration-300 tracking-tight border border-white/10 shadow-xl backdrop-blur-3xl"
-              >
-                View Demo
-              </Link>
-            </motion.div>
-
-            {/* Stats */}
-            <motion.div variants={staggerContainer} className="grid grid-cols-3 gap-6 max-w-xl">
-              {[
-                { icon: Zap, title: 'Real-time', desc: 'Instant Delivery', color: 'text-[#00E5FF]' },
-                { icon: Shield, title: '100%', desc: 'Secure', color: 'text-[#D500F9]' },
-                { icon: MessageCircle, title: 'Free', desc: 'Forever', color: 'text-white' }
-              ].map((stat, idx) => (
-                <motion.div
-                  key={idx}
-                  variants={itemVariant}
-                  className="glass-card p-5 rounded-[20px] border border-white/10 relative overflow-hidden group hover:border-white/30 transition-colors"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <div className="flex items-center gap-2 mb-3 relative z-10">
-                    <stat.icon className={`w-6 h-6 ${stat.color}`} />
-                    <div className="text-3xl font-bold text-white tracking-tighter">{stat.title}</div>
+            {/* The Real Replica Layout */}
+            <div className="flex bg-surface rounded-2xl overflow-hidden h-[500px] border border-outline-variant/20 mt-2">
+              {/* Sidebar Repo */}
+              <div className="hidden md:flex flex-col w-64 bg-surface-container border-r border-outline-variant/20 p-4">
+                <div className="mb-6 px-2">
+                  <h3 className="text-xl font-extrabold font-headline mb-4">Connections</h3>
+                  <div className="flex items-center justify-between mb-4 bg-surface-container-low rounded-xl px-3 py-2 border border-outline-variant/10">
+                    <span className="text-sm font-semibold tracking-tight text-on-surface truncate">Project Alpha</span>
+                    <span className="material-symbols-outlined text-sm text-tertiary">chevron_right</span>
                   </div>
-                  <div className="text-sm font-medium text-gray-400 relative z-10">{stat.desc}</div>
-                </motion.div>
-              ))}
-            </motion.div>
-          </motion.div>
-
-          {/* Right Side - Chat UI Mockup */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
-            whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.4, type: "spring", stiffness: 100, damping: 20 }}
-            className="relative hidden lg:block"
-          >
-            {/* Main Chat Container */}
-            <div
-              className="glass-card rounded-[32px] border border-white/20 p-6 shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden backdrop-blur-3xl"
-              style={{ minHeight: '560px' }}
-            >
-              {/* Top ambient glow */}
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[20px] bg-gradient-to-r from-transparent via-[#00E5FF]/40 to-transparent blur-[15px]" />
-              
-              {/* Chat Header */}
-              <div className="flex items-center gap-3 pb-6 border-b border-white/10 mb-6">
-                <div className="w-3 h-3 rounded-full bg-red-400" />
-                <div className="w-3 h-3 rounded-full bg-yellow-400" />
-                <div className="w-3 h-3 rounded-full bg-green-400" />
-                <div className="flex-1" />
-                <div className="text-sm font-semibold tracking-tight text-gray-300">Aetheri UI</div>
+                  
+                  <div className="space-y-3 mt-6">
+                    <p className="text-xs font-bold text-on-surface-variant uppercase tracking-wider px-2 mb-2">Online - 3</p>
+                    {['Elena R.', 'Marcus V.', 'Sarah J.'].map((name, i) => (
+                      <div key={name} className={`flex items-center gap-3 px-3 py-2 rounded-xl transition-all ${i===0?'bg-primary/20 border border-primary/30':'hover:bg-surface-container-high border border-transparent'}`}>
+                        <div className="relative">
+                          <img src={`https://api.dicebear.com/7.x/notionists/svg?seed=${name}&backgroundColor=transparent`} className="w-8 h-8 rounded-full border border-surface" />
+                          <div className={`absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full border-2 border-surface ${i===0?'bg-green-400':'bg-outline'}`}></div>
+                        </div>
+                        <span className={`text-sm font-semibold truncate ${i===0?'text-primary':'text-on-surface-variant'}`}>{name}</span>
+                        {i === 0 && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-primary relative animate-pulse shadow-[0_0_8px_var(--color-primary)]"></span>}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                
+                <div className="mt-auto px-2 pt-4 border-t border-outline-variant/10">
+                  <div className="flex items-center gap-3 w-full p-2 rounded-xl bg-surface-container-low hover:bg-surface-container-high transition-colors">
+                    <img src={`https://api.dicebear.com/7.x/notionists/svg?seed=You&backgroundColor=transparent`} className="w-9 h-9 rounded-full bg-surface" />
+                    <div className="flex flex-col justify-center flex-1">
+                      <span className="text-sm font-bold text-on-surface leading-none mb-1 truncate">You</span>
+                      <span className="text-xs text-on-surface-variant leading-none truncate opacity-80 font-medium">Design Lead</span>
+                    </div>
+                    <span className="material-symbols-outlined text-on-surface-variant hover:text-on-surface transition-colors">settings</span>
+                  </div>
+                </div>
               </div>
 
-              {/* Chat Messages */}
-              <div className="space-y-6">
-                {/* Message 1 */}
-                <motion.div
-                  initial={{ opacity: 0, x: -20, y: 10 }}
-                  animate={{ opacity: 1, x: 0, y: 0 }}
-                  transition={{ delay: 0.8 }}
-                  className="flex items-end gap-3"
-                >
-                  <div className="w-10 h-10 rounded-[14px] bg-gradient-to-br from-[#651FFF] to-[#D500F9] flex items-center justify-center text-white text-sm font-bold shadow-lg">
-                    U
+              {/* Chat Area Repo */}
+              <div className="flex-1 flex flex-col bg-surface relative">
+                {/* Header */}
+                <div className="h-16 flex items-center justify-between px-6 border-b border-outline-variant/10 bg-surface/80 backdrop-blur-md">
+                  <div className="flex flex-col">
+                    <h2 className="font-extrabold font-headline tracking-tighter text-lg flex items-center gap-2">Project Alpha <span className="px-2 py-0.5 rounded text-[10px] uppercase font-bold bg-primary/20 text-primary border border-primary/30">Official</span></h2>
+                    <p className="text-xs text-on-surface-variant font-medium">3 members online</p>
                   </div>
-                  <div className="bg-gradient-to-r from-[#651FFF] to-[#D500F9] text-white px-5 py-3.5 rounded-[20px] rounded-tl-sm max-w-xs shadow-glow-md">
-                    <p className="text-[15px] tracking-tight">Hey! How does this AI chat work?</p>
-                    <p className="text-[11px] opacity-70 mt-1.5 font-medium">10:30 AM</p>
+                  <div className="flex gap-4 text-on-surface-variant">
+                    <span className="material-symbols-outlined">search</span>
+                    <span className="material-symbols-outlined">more_vert</span>
                   </div>
-                </motion.div>
+                </div>
 
-                {/* Message 2 */}
-                <motion.div
-                  initial={{ opacity: 0, x: 20, y: 10 }}
-                  animate={{ opacity: 1, x: 0, y: 0 }}
-                  transition={{ delay: 1 }}
-                  className="flex items-end gap-3 justify-end"
-                >
-                  <div className="glass-card px-5 py-3.5 rounded-[20px] rounded-tr-sm max-w-xs border border-white/10 shadow-md">
-                    <p className="text-[15px] tracking-tight text-white">Welcome to the future of messaging! I'm here to help you instantly.</p>
-                    <p className="text-[11px] text-gray-400 mt-1.5 font-medium">10:30 AM</p>
-                  </div>
-                  <div className="w-10 h-10 rounded-[14px] bg-gradient-to-br from-[#00E5FF] to-[#D500F9] flex items-center justify-center text-white text-sm font-bold shadow-lg">
-                    AI
-                  </div>
-                </motion.div>
-
-                {/* Message 3 */}
-                <motion.div
-                  initial={{ opacity: 0, x: -20, y: 10 }}
-                  animate={{ opacity: 1, x: 0, y: 0 }}
-                  transition={{ delay: 1.2 }}
-                  className="flex items-end gap-3"
-                >
-                  <div className="w-10 h-10 rounded-[14px] bg-gradient-to-br from-[#651FFF] to-[#D500F9] flex items-center justify-center text-white text-sm font-bold shadow-lg">
-                    U
-                  </div>
-                  <div className="bg-gradient-to-r from-[#651FFF] to-[#D500F9] text-white px-5 py-3.5 rounded-[20px] rounded-tl-sm max-w-xs shadow-glow-md">
-                    <p className="text-[15px] tracking-tight">This interface is amazing!</p>
-                    <p className="text-[11px] opacity-70 mt-1.5 font-medium">10:31 AM</p>
-                  </div>
-                </motion.div>
-
-                {/* Typing Indicator */}
-                <motion.div
-                  initial={{ opacity: 0, x: 20, y: 10 }}
-                  animate={{ opacity: 1, x: 0, y: 0 }}
-                  transition={{ delay: 1.4 }}
-                  className="flex items-end gap-3 justify-end"
-                >
-                  <div className="glass-card px-6 py-4 rounded-[20px] rounded-tr-sm border border-white/10">
-                    <div className="flex gap-1.5">
-                      <motion.div
-                        animate={{ y: [0, -5, 0] }}
-                        transition={{ duration: 0.6, repeat: Infinity, delay: 0 }}
-                        className="w-2.5 h-2.5 rounded-full bg-[#00E5FF]"
-                      />
-                      <motion.div
-                        animate={{ y: [0, -5, 0] }}
-                        transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }}
-                        className="w-2.5 h-2.5 rounded-full bg-[#D500F9]"
-                      />
-                      <motion.div
-                        animate={{ y: [0, -5, 0] }}
-                        transition={{ duration: 0.6, repeat: Infinity, delay: 0.4 }}
-                        className="w-2.5 h-2.5 rounded-full bg-white"
-                      />
+                {/* Messages */}
+                <div className="flex-1 p-6 space-y-6 overflow-hidden flex flex-col justify-end bg-gradient-to-b from-surface/50 to-surface pb-32">
+                  <div className="flex flex-col gap-1 items-start max-w-[80%]">
+                    <div className="flex items-baseline gap-2 ml-12 mb-1">
+                      <span className="font-bold text-sm text-on-surface">Elena R.</span>
+                      <span className="text-[11px] text-on-surface-variant font-medium">10:41 AM</span>
+                    </div>
+                    <div className="flex gap-3">
+                      <img src="https://api.dicebear.com/7.x/notionists/svg?seed=Elena R.&backgroundColor=transparent" className="w-9 h-9 rounded-full border border-outline-variant/20 flex-shrink-0" />
+                      <div className="bg-surface-container-high text-on-surface px-4 py-3 rounded-2xl rounded-tl-sm text-[15px] font-medium leading-relaxed border border-outline-variant/10 shadow-sm">
+                        Just pushed the latest design updates. Have you checked the new hero layout?
+                      </div>
                     </div>
                   </div>
-                  <div className="w-10 h-10 rounded-[14px] bg-gradient-to-br from-[#00E5FF] to-[#D500F9] flex items-center justify-center text-white text-sm font-bold shadow-lg">
-                    AI
+                  
+                  <div className="flex flex-col gap-1 items-end self-end max-w-[80%]">
+                    <div className="flex items-baseline gap-2 mr-2 mb-1">
+                      <span className="text-[11px] text-on-surface-variant font-medium">10:43 AM</span>
+                      <span className="font-bold text-sm text-on-surface">You</span>
+                    </div>
+                    <div className="bg-gradient-to-br from-primary to-primary-dim text-on-primary px-4 py-3 rounded-2xl rounded-tr-sm text-[15px] font-semibold leading-relaxed shadow-md shadow-primary/20">
+                      Yes! It looks perfectly aligned with the FluxChat aesthetic. Exactly what we wanted! ✨
+                    </div>
                   </div>
-                </motion.div>
-              </div>
+                  
+                  {/* Typing Indicator */}
+                  <div className="flex items-center gap-3">
+                    <img src="https://api.dicebear.com/7.x/notionists/svg?seed=Elena R.&backgroundColor=transparent" className="w-8 h-8 rounded-full opacity-70" />
+                    <div className="bg-surface-container text-on-surface-variant px-4 py-2 rounded-2xl rounded-tl-sm flex items-center gap-1.5 h-10 w-16">
+                      <div className="w-1.5 h-1.5 bg-current rounded-full animate-bounce"></div>
+                      <div className="w-1.5 h-1.5 bg-current rounded-full animate-bounce" style={{animationDelay: '150ms'}}></div>
+                      <div className="w-1.5 h-1.5 bg-current rounded-full animate-bounce" style={{animationDelay: '300ms'}}></div>
+                    </div>
+                  </div>
+                </div>
 
-              {/* Input Area Mockup */}
-              <div className="mt-8 pt-6 border-t border-white/10">
-                <div className="glass-dark rounded-full border border-white/10 p-2 flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10" />
-                  <div className="flex-1 h-2 bg-white/10 rounded-full" />
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-r from-[#00E5FF] to-[#D500F9] flex items-center justify-center shadow-lg">
-                    <Send className="w-4 h-4 text-white" />
+                {/* Input */}
+                <div className="absolute bottom-6 left-6 right-6">
+                  <div className="bg-surface-container-high/80 backdrop-blur-xl border border-outline-variant/20 rounded-2xl p-2 flex items-center gap-3 shadow-lg group focus-within:border-primary/50 focus-within:ring-1 focus-within:ring-primary/20 transition-all">
+                    <button className="w-10 h-10 rounded-xl bg-surface-container hover:bg-surface-container-low text-on-surface-variant flex flex-shrink-0 items-center justify-center transition-colors">
+                      <span className="material-symbols-outlined">add</span>
+                    </button>
+                    <div className="flex-1 bg-transparent px-2 text-[15px] font-medium text-on-surface-variant">Type a message...</div>
+                    <button className="w-10 h-10 rounded-xl bg-primary text-on-primary hover:bg-primary-dim flex flex-shrink-0 items-center justify-center transition-colors shadow-md shadow-primary/20">
+                      <span className="material-symbols-outlined text-sm">send</span>
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
-
-            {/* Floating Notifications */}
-            <motion.div
-              animate={{ y: [-10, 10, -10] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -top-8 -right-8 glass-light backdrop-blur-xl px-5 py-4 rounded-2xl border border-white/20 shadow-[0_0_30px_rgba(0,0,0,0.5)] z-20"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-2.5 h-2.5 rounded-full bg-[#00E5FF] shadow-[0_0_10px_#00E5FF] animate-pulse" />
-                <span className="text-sm font-semibold tracking-tight text-white">Quantum Core Online</span>
-              </div>
-            </motion.div>
-          </motion.div>
+            
+            {/* Glow underlayer */}
+            <div className="absolute -inset-2 bg-gradient-to-r from-primary/20 via-tertiary/20 to-secondary/20 rounded-[40px] blur-3xl -z-10 mix-blend-screen opacity-50"></div>
+          </div>
         </div>
       </div>
     </section>

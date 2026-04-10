@@ -1,127 +1,102 @@
-import { motion } from 'framer-motion';
-import { Zap, Users, MessageSquare, Clock, Shield, Sparkles } from 'lucide-react';
+import { useRef } from 'react';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const features = [
   {
-    icon: Zap,
-    title: 'Instant Intelligence',
-    description: 'Instant intelligence and network vocabulary neural intelligence.',
-    gradient: 'from-[#00E5FF] to-[#D500F9]',
-    glowColor: '0, 229, 255',
+    image: '/feature_realtime_sync.png',
+    title: 'Real-time sync',
+    description: 'Messages arrive instantly, keeping every active conversation current without refreshing the room.',
+    tone: 'primary',
   },
   {
-    icon: Users,
-    title: 'Multilingual Support',
-    description: 'Introduce the unseen powers to multilingual supports.',
-    gradient: 'from-[#651FFF] to-[#00E5FF]',
-    glowColor: '101, 31, 255',
+    image: '/feature_typing_indicator.png',
+    title: 'Typing indicator',
+    description: 'See when someone is replying, so conversations feel present, responsive, and easy to follow.',
+    tone: 'tertiary',
   },
   {
-    icon: MessageSquare,
-    title: 'Contextual Memory',
-    description: 'Contextual flow chatbot assessment and reactive interactions.',
-    gradient: 'from-[#D500F9] to-[#651FFF]',
-    glowColor: '213, 0, 249',
-  },
-  {
-    icon: Clock,
-    title: 'Zero Latency',
-    description: 'Quantum-grade speed with seamless WebSocket connectivity.',
-    gradient: 'from-[#00E5FF] to-[#651FFF]',
-    glowColor: '0, 229, 255',
-  },
-  {
-    icon: Shield,
-    title: 'Enterprise Security',
-    description: 'End-to-end encryption with advanced JWT authentication.',
-    gradient: 'from-[#651FFF] to-[#D500F9]',
-    glowColor: '101, 31, 255',
-  },
-  {
-    icon: Sparkles,
-    title: 'Expressive UI',
-    description: 'Premium glassmorphism and stunning visual feedback.',
-    gradient: 'from-[#D500F9] to-[#00E5FF]',
-    glowColor: '213, 0, 249',
+    image: '/feature_online_status.png',
+    title: 'Online status',
+    description: "Know who's around with gentle active indicators that keep the room clear without adding noise.",
+    tone: 'secondary',
   },
 ];
 
-const Features = () => {
+const toneStyles = {
+  primary: {
+    icon: 'text-primary',
+    soft: 'bg-primary/10',
+    line: 'bg-primary',
+    bubble: 'bg-primary text-on-primary',
+  },
+  tertiary: {
+    icon: 'text-tertiary',
+    soft: 'bg-tertiary-container/40',
+    line: 'bg-tertiary',
+    bubble: 'bg-tertiary text-on-tertiary',
+  },
+  secondary: {
+    icon: 'text-secondary',
+    soft: 'bg-secondary-container/45',
+    line: 'bg-secondary',
+    bubble: 'bg-secondary text-on-secondary',
+  },
+};
+
+const FeatureVisual = ({ feature }) => {
+  const tone = toneStyles[feature.tone];
+
   return (
-    <section id="features" className="py-32 bg-[#0B0F19] relative overflow-hidden">
-      {/* Background Grid */}
-      <div 
-        className="absolute inset-0 opacity-10"
-        style={{
-          backgroundImage: `radial-gradient(circle at 1px 1px, rgba(213, 0, 249, 0.3) 1px, transparent 0)`,
-          backgroundSize: '80px 80px'
-        }}
-      />
+    <div className={`mb-8 rounded-[16px] border border-outline-variant/30 ${tone.soft} p-2 shadow-inner overflow-hidden relative group-hover:scale-[1.02] transition-transform duration-500`}>
+      <img src={feature.image} alt={feature.title} className="w-full h-48 object-cover rounded-[12px] mix-blend-luminosity group-hover:mix-blend-normal transition-all duration-500 opacity-90 group-hover:opacity-100" />
+      <div className={`absolute inset-0 bg-gradient-to-t from-surface-container-low to-transparent opacity-60`}></div>
+    </div>
+  );
+};
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
-          className="mb-20 text-center mx-auto max-w-4xl"
-        >
-          <h2 className="text-5xl md:text-7xl font-extrabold mb-8 tracking-tighter text-white">
-            Platform <br className="md:hidden" />
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#D500F9] to-[#00E5FF] ml-0 md:ml-4">
-              Capabilities
-            </span>
+const Features = () => {
+  const container = useRef();
+
+  useGSAP(() => {
+    gsap.from('.feature-card', {
+      scrollTrigger: {
+        trigger: container.current,
+        start: 'top 80%',
+      },
+      y: 40,
+      opacity: 0,
+      duration: 0.8,
+      stagger: 0.15,
+      ease: 'power2.out',
+    });
+  }, { scope: container });
+
+  return (
+    <section id="features" ref={container} className="scroll-mt-24 py-24 bg-surface">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="mb-12 max-w-2xl">
+          <p className="text-sm font-headline font-bold text-primary uppercase tracking-[0.2em] mb-4">Features</p>
+          <h2 className="text-4xl md:text-5xl font-extrabold font-headline tracking-tight text-on-background">
+            Built for natural, real-time conversations.
           </h2>
-          <p className="text-xl md:text-2xl text-gray-400 leading-relaxed tracking-tight max-w-2xl mx-auto">
-            Everything you need for seamless, modern communication wrapped in a premium UI layer.
-          </p>
-        </motion.div>
+        </div>
 
-        {/* 12-Column Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-12 auto-rows-[280px] gap-8">
-          {features.map((feature, index) => {
-            const isLarge = index === 0 || index === 3 || index === 4;
-            const spanClass = isLarge ? 'md:col-span-8' : 'md:col-span-4';
-
-            return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.6, delay: index * 0.1, ease: [0.19, 1, 0.22, 1] }}
-                whileHover={{ y: -5, scale: 0.98 }}
-                className={`group relative ${spanClass}`}
-              >
-                {/* Neon Hover Glow Underneath */}
-                <div 
-                  className="absolute inset-0 rounded-[32px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
-                  style={{ background: `rgba(${feature.glowColor}, 0.5)` }}
-                />
-
-                {/* Glass Card */}
-                <div className="glass-card rounded-[32px] p-10 border border-white/10 h-full transition-all duration-500 overflow-hidden relative z-10 flex flex-col justify-between group-hover:border-white/40 group-hover:bg-[#151D33]/80">
-                  {/* Subtle Corner Gradient */}
-                  <div className={`absolute -bottom-20 -right-20 w-48 h-48 bg-gradient-to-br ${feature.gradient} opacity-20 group-hover:opacity-40 transition-opacity duration-500 blur-3xl`} />
-                  
-                  <div className="relative z-20 flex justify-between items-start">
-                    <div className={`w-16 h-16 bg-gradient-to-br ${feature.gradient} rounded-[20px] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-500 ease-out`}>
-                      <feature.icon className="w-8 h-8 text-white" />
-                    </div>
-                  </div>
-
-                  <div className="relative z-20 mt-auto pt-8">
-                    <h3 className="text-3xl font-extrabold mb-3 text-white tracking-tight group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-400 transition-all duration-300">
-                      {feature.title}
-                    </h3>
-                    <p className="text-gray-400 leading-relaxed text-[17px] max-w-sm tracking-tight group-hover:text-gray-300 transition-colors">
-                      {feature.description}
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
+        <div className="grid md:grid-cols-3 gap-8">
+          {features.map((feature) => (
+            <div key={feature.title} className="feature-card bg-surface-container-low p-6 rounded-[8px] border border-outline-variant/20 hover:bg-surface-container transition-colors group">
+              <FeatureVisual feature={feature} />
+              <h3 className="text-2xl font-bold font-headline text-on-background mb-4 tracking-tight">
+                {feature.title}
+              </h3>
+              <p className="text-on-surface-variant leading-relaxed text-[15px]">
+                {feature.description}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

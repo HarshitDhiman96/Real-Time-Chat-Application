@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import ChatSidebar from './ChatSidebar';
 import MessageList from './MessageList';
@@ -7,16 +8,11 @@ import Navbar from './Navbar';
 import { authAPI, setAuthToken } from '../../utils/api';
 
 const Chat = ({ userName, token, onLogout }) => {
+  const navigate = useNavigate();
   const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState([]);
   const [typingUsers, setTypingUsers] = useState([]);
   const [socket, setSocket] = useState(null);
-  const [showChangePassword, setShowChangePassword] = useState(false);
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [passwordSuccess, setPasswordSuccess] = useState('');
-  const [passwordLoading, setPasswordLoading] = useState(false);
   const [darkMode, setDarkMode] = useState(() => {
     // Check localStorage or system preference on initial load
     if (typeof window !== 'undefined') {
@@ -194,16 +190,15 @@ const Chat = ({ userName, token, onLogout }) => {
   };
 
   return (
-    <div className="flex min-h-screen bg-deep-space relative pt-20">
+    <div className="flex min-h-screen bg-surface relative pt-20">
       <Navbar 
         onLogout={onLogout} 
-        darkMode={darkMode} 
-        toggleDarkMode={() => setDarkMode(!darkMode)} 
+        onSettingsClick={() => navigate('/profile')}
       />
       
       {showMobileSidebar && (
         <div 
-          className="fixed inset-0 bg-[#0B0F19]/80 backdrop-blur-md z-40 md:hidden"
+          className="fixed inset-0 bg-surface-container-highest/80 backdrop-blur-md z-40 md:hidden"
           onClick={() => setShowMobileSidebar(false)}
         />
       )}
@@ -215,7 +210,7 @@ const Chat = ({ userName, token, onLogout }) => {
           users={users} 
           currentUser={userName} 
           onLogout={onLogout}
-          onChangePassword={() => setShowChangePassword(true)}
+          onChangePassword={() => navigate('/profile')}
         />
       </div>
 
@@ -229,78 +224,6 @@ const Chat = ({ userName, token, onLogout }) => {
           <MessageInput onSendMessage={sendMessage} onTyping={handleTyping} />
         </div>
       </div>
-
-      {showChangePassword && (
-        <div className="fixed inset-0 bg-[#0B0F19]/60 backdrop-blur-md flex items-center justify-center z-[100] p-4">
-          <div className="bg-[#151D33]/90 backdrop-blur-2xl border border-white/10 rounded-[32px] shadow-[0_0_50px_rgba(0,0,0,0.5)] max-w-md w-full p-8 relative overflow-hidden">
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[60px] bg-gradient-to-r from-transparent via-[#D500F9]/20 to-transparent blur-[20px] pointer-events-none" />
-            
-            <h2 className="text-2xl font-extrabold text-white mb-8 tracking-tight">Change Password</h2>
-            <form onSubmit={handleChangePassword} className="space-y-6 relative z-10">
-              <div>
-                <label className="block text-sm font-semibold text-gray-300 mb-2 tracking-tight">
-                  New Password
-                </label>
-                <input
-                  type="password"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  placeholder="Enter new password"
-                  minLength={6}
-                  required
-                  className="w-full px-5 py-3.5 rounded-[16px] border border-white/10 bg-white/5 text-white placeholder-gray-500 focus:border-[#00E5FF] focus:outline-none focus:ring-1 focus:ring-[#00E5FF]/50 transition-all font-medium tracking-tight"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-gray-300 mb-2 tracking-tight">
-                  Confirm Password
-                </label>
-                <input
-                  type="password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  placeholder="Confirm new password"
-                  minLength={6}
-                  required
-                  className="w-full px-5 py-3.5 rounded-[16px] border border-white/10 bg-white/5 text-white placeholder-gray-500 focus:border-[#D500F9] focus:outline-none focus:ring-1 focus:ring-[#D500F9]/50 transition-all font-medium tracking-tight"
-                />
-              </div>
-              {passwordError && (
-                <div className="bg-red-500/10 border border-red-500/20 text-red-400 px-5 py-3 rounded-[16px] text-sm font-medium tracking-tight">
-                  {passwordError}
-                </div>
-              )}
-              {passwordSuccess && (
-                <div className="bg-green-500/10 border border-green-500/20 text-[#00E5FF] px-5 py-3 rounded-[16px] text-sm font-medium tracking-tight">
-                  {passwordSuccess}
-                </div>
-              )}
-              <div className="flex gap-4 pt-4">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setShowChangePassword(false);
-                    setNewPassword('');
-                    setConfirmPassword('');
-                    setPasswordError('');
-                    setPasswordSuccess('');
-                  }}
-                  className="flex-1 px-5 py-3.5 bg-white/5 hover:bg-white/10 text-white rounded-[16px] font-bold tracking-tight transition-all border border-white/10"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={passwordLoading}
-                  className="flex-1 px-5 py-3.5 bg-gradient-to-r from-[#00E5FF] to-[#D500F9] text-white rounded-[16px] font-bold tracking-tight shadow-[0_0_15px_rgba(213,0,249,0.3)] hover:shadow-[0_0_25px_rgba(0,229,255,0.4)] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {passwordLoading ? 'Changing...' : 'Update'}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

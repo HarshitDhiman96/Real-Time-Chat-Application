@@ -35,21 +35,23 @@ const MessageInput = ({ onSendMessage, onTyping }) => {
     <motion.div
       initial={{ y: 20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className="p-4"
+      className="p-4 bg-transparent"
     >
       <form
         onSubmit={handleSubmit}
-        className={`glass-dark backdrop-blur-xl border border-white/10 rounded-[32px] mx-auto max-w-5xl transition-all duration-300 ${
-          isFocused ? 'shadow-[0_0_30px_rgba(0,229,255,0.15)] border-[#00E5FF]/40 bg-[#151D33]/90' : 'shadow-lg bg-[#0E1424]/90'
+        className={`backdrop-blur-2xl border transition-all duration-300 rounded-full mx-auto max-w-5xl ${
+          isFocused 
+            ? 'bg-surface-container border-primary/50 shadow-md ring-2 ring-primary/20' 
+            : 'bg-surface-container-lowest/80 border-outline-variant/30 shadow-sm'
         }`}
       >
         <div className="flex items-center gap-3 p-2">
           {/* File Upload Button */}
           <motion.button
             type="button"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            className="p-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-full transition-all"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="p-3 text-on-surface-variant hover:text-primary hover:bg-surface-container-high rounded-full transition-all"
             title="Attach file"
           >
             <Paperclip className="w-5 h-5" />
@@ -65,16 +67,16 @@ const MessageInput = ({ onSendMessage, onTyping }) => {
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
               placeholder="Type your message..."
-              className="w-full px-4 py-3 bg-transparent text-white placeholder-gray-500 focus:outline-none text-[15px] tracking-tight"
+              className="w-full px-4 py-3 bg-transparent text-on-surface placeholder:text-outline focus:outline-none text-[15px] font-body tracking-tight"
             />
           </div>
 
           {/* Emoji Button */}
           <motion.button
             type="button"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            className="p-3 text-gray-400 hover:text-[#00E5FF] hover:bg-white/5 rounded-full transition-all"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="p-3 text-on-surface-variant hover:text-primary hover:bg-surface-container-high rounded-full transition-all"
             title="Add emoji"
           >
             <Smile className="w-5 h-5" />
@@ -86,7 +88,7 @@ const MessageInput = ({ onSendMessage, onTyping }) => {
             disabled={!message.trim()}
             whileHover={{ scale: message.trim() ? 1.05 : 1 }}
             whileTap={{ scale: message.trim() ? 0.95 : 1 }}
-            className="p-3.5 bg-gradient-to-r from-[#00E5FF] to-[#D500F9] text-white rounded-full shadow-[0_0_15px_rgba(0,229,255,0.3)] hover:shadow-[0_0_25px_rgba(213,0,249,0.4)] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none mr-1"
+            className="p-3.5 bg-gradient-to-r from-primary to-primary-dim text-on-primary rounded-full shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none mr-1"
           >
             <Send className="w-5 h-5" />
           </motion.button>
