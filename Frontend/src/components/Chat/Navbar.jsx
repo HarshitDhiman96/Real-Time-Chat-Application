@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Home, MessageSquare, Settings, LogOut, Moon, Sun, ArrowLeft } from 'lucide-react';
+import { Home, MessageSquare, Settings, LogOut, Moon, Sun, ArrowLeft, Menu } from 'lucide-react';
 import { useMagnetic } from '../../hooks/useMagnetic';
 
 const Navbar = ({ onLogout, onSettingsClick }) => {
@@ -70,6 +70,12 @@ const Navbar = ({ onLogout, onSettingsClick }) => {
               title="Go Back"
             >
               <ArrowLeft className="w-5 h-5 text-on-surface-variant group-hover:text-primary transition-colors" />
+            </button>
+            <button 
+              className="md:hidden p-2 rounded-full hover:bg-surface-container transition-colors"
+              onClick={() => window.dispatchEvent(new CustomEvent('open-sidebar'))}
+            >
+              <Menu className="w-5 h-5 text-on-surface-variant" />
             </button>
             <div 
               className="flex items-center gap-2 cursor-pointer group"

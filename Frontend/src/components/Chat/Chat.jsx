@@ -111,15 +111,18 @@ const Chat = ({ userName, token, onLogout }) => {
       }
     };
 
-    // Close mobile sidebar event listener
+    // Close/Open mobile sidebar event listeners
     const handleCloseSidebar = () => setShowMobileSidebar(false);
+    const handleOpenSidebar = () => setShowMobileSidebar(true);
     window.addEventListener('close-sidebar', handleCloseSidebar);
+    window.addEventListener('open-sidebar', handleOpenSidebar);
 
     window.addEventListener('beforeunload', handleBeforeUnload);
 
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
       window.removeEventListener('close-sidebar', handleCloseSidebar);
+      window.removeEventListener('open-sidebar', handleOpenSidebar);
       if (newSocket && newSocket.connected) {
         newSocket.disconnect();
       }

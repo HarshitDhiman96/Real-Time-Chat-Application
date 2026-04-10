@@ -71,7 +71,7 @@ const Profile = () => {
     <div className="min-h-screen bg-surface flex flex-col items-center pt-24 px-4 font-body">
       <div className="absolute top-6 left-6 z-10 w-full">
         <button 
-          onClick={() => navigate(-1)} 
+          onClick={() => navigate('/chat')} 
           className="flex items-center gap-2 px-4 py-2 bg-surface-container-low/50 hover:bg-surface-container-low text-on-surface backdrop-blur-xl border border-outline-variant/30 rounded-full font-headline text-sm font-bold shadow-sm transition-all hover:pr-5 group"
         >
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />

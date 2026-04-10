@@ -6,7 +6,7 @@ const ChatSidebar = ({ users, currentUser, onLogout, onChangePassword }) => {
     <motion.div 
       initial={{ x: -100 }}
       animate={{ x: 0 }}
-      className="w-72 bg-surface border-r border-outline-variant/20 flex flex-col h-[calc(100vh-5rem)] flex-shrink-0 hidden md:flex"
+      className="w-72 bg-surface border-r border-outline-variant/20 flex flex-col h-[calc(100vh-5rem)] flex-shrink-0"
     >
       {/* Header */}
       <div className="p-6 border-b border-outline-variant/20">
@@ -70,6 +70,22 @@ const ChatSidebar = ({ users, currentUser, onLogout, onChangePassword }) => {
               </div>
             </motion.div>
           ))}
+        </div>
+      </div>
+
+      {/* Profile Section */}
+      <div className="p-4 border-t border-outline-variant/20 bg-surface-container-low/50">
+        <div className="flex items-center gap-3 p-3 bg-surface rounded-[16px] border border-outline-variant/10 shadow-sm">
+          <div className="relative flex-shrink-0">
+            <div className="w-10 h-10 bg-primary-container text-on-primary-container rounded-full flex items-center justify-center font-bold text-lg">
+              {currentUser ? currentUser.charAt(0).toUpperCase() : 'U'}
+            </div>
+            <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-surface rounded-full" />
+          </div>
+          <div className="flex flex-col min-w-0">
+            <span className="text-[14px] font-bold text-on-surface truncate">{currentUser || 'User'}</span>
+            <span className="text-[11px] font-semibold text-primary">Online</span>
+          </div>
         </div>
       </div>
 

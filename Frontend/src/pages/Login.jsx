@@ -72,7 +72,7 @@ const Login = () => {
       
       {/* Back to Home Button */}
       <div className="absolute top-6 left-6 sm:left-12 z-[100] auth-left-content">
-        <button onClick={() => navigate(-1)} className="flex items-center gap-2 px-4 py-2 bg-surface-container-low/50 hover:bg-surface-container-low text-on-surface backdrop-blur-xl border border-outline-variant/30 rounded-full font-headline text-sm font-bold shadow-sm transition-all hover:pr-5 cursor-pointer">
+        <button onClick={() => navigate('/')} className="flex items-center gap-2 px-4 py-2 bg-surface-container-low/80 hover:bg-surface-container-low text-on-surface lg:bg-white/10 lg:hover:bg-white/20 lg:text-white backdrop-blur-xl border border-outline-variant/30 lg:border-white/20 rounded-full font-headline text-sm font-bold shadow-sm transition-all hover:pr-5 cursor-pointer">
           <ArrowLeft className="w-4 h-4" />
           <span>Previous Page</span>
         </button>
