@@ -7,25 +7,19 @@ const steps = [
     icon: UserPlus,
     title: 'Create Account',
     description: 'Sign up instantly with your username. No credit card required, completely free.',
-    gradient: 'from-[#D500F9] to-[#651FFF]',
-    glow: 'shadow-[0_0_40px_rgba(213,0,249,0.3)]',
-    image: '/how_auth.png'
+    image: '/how_auth.png',
   },
   {
     icon: MessageCircle,
     title: 'Join Chat Room',
     description: 'Enter the main room or create your own space. Connect with people instantly.',
-    gradient: 'from-[#651FFF] to-[#00E5FF]',
-    glow: 'shadow-[0_0_40px_rgba(101,31,255,0.3)]',
-    image: '/how_landing.png'
+    image: '/how_landing.png',
   },
   {
     icon: Send,
     title: 'Start Messaging',
     description: 'Send real-time messages, share ideas, and engage with your community.',
-    gradient: 'from-[#00E5FF] to-[#D500F9]',
-    glow: 'shadow-[0_0_40px_rgba(0,229,255,0.3)]',
-    image: '/how_chat.png'
+    image: '/how_chat.png',
   },
 ];
 
@@ -33,20 +27,8 @@ const HowItWorks = () => {
   const [activeStep, setActiveStep] = useState(0);
 
   return (
-    <section id="how-it-works" className="scroll-mt-24 py-24 bg-[#0B0F19] relative overflow-hidden">
-      {/* Background Effects */}
-      <div 
-        className="absolute inset-0 opacity-10"
-        style={{
-          backgroundImage: `radial-gradient(circle at 1px 1px, rgba(213, 0, 249, 0.2) 1px, transparent 0)`,
-          backgroundSize: '80px 80px'
-        }}
-      />
-      
-      <div className="absolute top-1/3 right-0 w-96 h-96 bg-[#D500F9]/10 rounded-full filter blur-[120px]" />
-      <div className="absolute bottom-1/3 left-0 w-96 h-96 bg-[#00E5FF]/10 rounded-full filter blur-[120px]" />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section id="how-it-works" className="scroll-mt-24 py-24 bg-[#f8f3ff] relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 relative">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -54,96 +36,83 @@ const HowItWorks = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-white/10 mb-6"
-          >
-            <Sparkles className="w-4 h-4 text-[#D500F9]" />
-            <span className="text-sm font-semibold tracking-tight text-gray-300">Simple & Fast</span>
-          </motion.div>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-[20px] bg-white/45 border border-black mb-6 shadow-sm">
+            <Sparkles className="w-4 h-4 text-[#5d4da4]" />
+            <span className="text-sm font-headline font-bold text-black">Simple &amp; Fast</span>
+          </div>
 
-          <h2 className="text-5xl md:text-6xl font-extrabold mb-6 tracking-tighter text-white">
+          <h2 className="text-4xl md:text-5xl font-extrabold font-headline mb-5 text-black">
             How It Works
           </h2>
-          <p className="text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto leading-relaxed tracking-tight">
-            Get started in three simple steps, wrapped in an expressive flow.
+          <p className="text-lg text-[#5e5b68] max-w-2xl mx-auto leading-relaxed">
+            Three simple steps to join the conversation.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 relative items-center">
-          
-          {/* Left Column: Vertical Timeline */}
-          <div className="space-y-6 relative pl-8">
-            <div className="absolute left-[31px] top-10 bottom-10 w-0.5 bg-white/10" />
-            
-            {steps.map((step, index) => (
-              <div 
-                key={index}
-                className={`relative flex items-start gap-8 p-6 rounded-[24px] cursor-pointer transition-all duration-300 border border-transparent ${activeStep === index ? 'bg-white/5 border-white/10 shadow-lg backdrop-blur-md' : 'hover:bg-white/5'}`}
-                onMouseEnter={() => setActiveStep(index)}
-              >
-                {/* Connector Node */}
-                <div className={`absolute -left-8 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full border-4 border-[#0B0F19] transition-all duration-300 ${activeStep === index ? 'bg-gradient-to-r ' + step.gradient + ' scale-125' : 'bg-white/20'}`} />
-                
-                <div className={`w-16 h-16 shrink-0 bg-gradient-to-br ${step.gradient} rounded-2xl flex items-center justify-center transition-all duration-500 ${activeStep === index ? step.glow : 'opacity-50'}`}>
-                  <step.icon className="w-8 h-8 text-white" />
-                </div>
-                
-                <div className="flex-1 pt-1">
-                  <h3 className={`text-2xl font-extrabold mb-2 transition-colors duration-300 ${activeStep === index ? 'text-white' : 'text-gray-400'}`}>
-                    {step.title}
-                  </h3>
-                  <p className="text-gray-400 text-[16px] leading-relaxed">
-                    {step.description}
-                  </p>
-                </div>
-              </div>
-            ))}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="space-y-3 relative pl-9">
+            <div className="absolute left-[19px] top-8 bottom-8 w-px bg-black/55" />
+
+            {steps.map((step, index) => {
+              const isActive = activeStep === index;
+              const StepIcon = step.icon;
+
+              return (
+                <button
+                  key={step.title}
+                  type="button"
+                  onMouseEnter={() => setActiveStep(index)}
+                  onFocus={() => setActiveStep(index)}
+                  onClick={() => setActiveStep(index)}
+                  className={`relative w-full flex items-start gap-5 p-5 text-left rounded-[20px] border transition-colors duration-200 ${isActive ? 'bg-white/55 border-black shadow-sm' : 'border-transparent hover:bg-white/35'}`}
+                >
+                  <span className={`absolute -left-9 top-8 w-5 h-5 rounded-full border-[3px] border-[#f8f3ff] ${isActive ? 'bg-[#00c65a]' : 'bg-[#d9d0f4]'}`} />
+                  <span className={`w-12 h-12 shrink-0 rounded-[14px] flex items-center justify-center border border-black ${isActive ? 'bg-[#e9e0ff] text-black' : 'bg-white/50 text-[#5e5b68]'}`}>
+                    <StepIcon className="w-6 h-6" />
+                  </span>
+                  <span className="flex-1 pt-1">
+                    <span className={`block text-xl font-bold font-headline mb-1 ${isActive ? 'text-black' : 'text-[#5e5b68]'}`}>
+                      {step.title}
+                    </span>
+                    <span className="block text-[#5e5b68] text-[15px] leading-relaxed">
+                      {step.description}
+                    </span>
+                  </span>
+                </button>
+              );
+            })}
           </div>
 
-          {/* Right Column: Preview Image */}
-          <div className="relative h-[500px] w-full rounded-[32px] border border-white/10 flex items-center justify-center overflow-hidden">
-            <div className="absolute inset-0 bg-surface-container-low/20 backdrop-blur-sm z-0"></div>
+          <div className="relative aspect-square max-h-[500px] mx-auto w-full rounded-[20px] bg-white/45 p-3 border border-black shadow-md overflow-hidden">
             <AnimatePresence mode="wait">
               <motion.img
                 key={activeStep}
                 src={steps[activeStep].image}
                 alt={steps[activeStep].title}
-                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                initial={{ opacity: 0, scale: 0.97, y: 12 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 1.05, y: -20 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
-                className="w-[85%] h-[85%] object-cover rounded-2xl shadow-2xl relative z-10 border border-white/10"
+                exit={{ opacity: 0, scale: 1.02, y: -12 }}
+                transition={{ duration: 0.35, ease: 'easeOut' }}
+                className="w-full h-full object-cover rounded-[14px] border border-black"
               />
             </AnimatePresence>
-            
-            {/* Glow under image */}
-            <div className={`absolute inset-0 bg-gradient-to-r ${steps[activeStep].gradient} opacity-10 blur-3xl -z-10`} />
           </div>
         </div>
 
-        {/* CTA Section */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="mt-28 text-center relative z-10"
+          transition={{ duration: 0.5 }}
+          className="mt-20 text-center"
         >
           <a
             href="/register"
-            className="group inline-flex items-center justify-center gap-3 px-12 py-6 bg-gradient-to-r from-[#00E5FF] to-[#D500F9] text-white rounded-[24px] font-extrabold text-xl shadow-[0_0_25px_rgba(0,229,255,0.4)] hover:shadow-[0_0_45px_rgba(213,0,249,0.5)] hover:scale-[1.02] transition-all duration-300 tracking-tight border border-white/20"
+            className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#e9e0ff] text-black rounded-[20px] font-headline font-bold shadow-sm hover:bg-[#ded1ff] transition-colors border border-black"
           >
             Start Chatting Now
-            <Send className="w-6 h-6 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+            <Send className="w-5 h-5" />
           </a>
-          
-          <p className="mt-8 text-gray-400 text-sm font-medium tracking-wide">
-            NO CREDIT CARD REQUIRED • FREE FOREVER • INSTANT SETUP
-          </p>
         </motion.div>
       </div>
     </section>

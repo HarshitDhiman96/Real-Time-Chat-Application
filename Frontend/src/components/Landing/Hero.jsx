@@ -1,9 +1,106 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
+import { motion } from 'framer-motion';
+import { BatteryCharging, Paperclip, Send, Wifi } from 'lucide-react';
 
 gsap.registerPlugin(useGSAP);
+
+const rotatingWords = ['everywhere', 'every time'];
+
+const RotatingWord = () => {
+  const [wordIndex, setWordIndex] = useState(0);
+  const [visibleWord, setVisibleWord] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const currentWord = rotatingWords[wordIndex];
+    const isComplete = visibleWord === currentWord;
+    const isEmpty = visibleWord.length === 0;
+    const delay = isComplete && !isDeleting ? 1500 : isDeleting ? 55 : 105;
+
+    const timeout = window.setTimeout(() => {
+      if (isComplete && !isDeleting) {
+        setIsDeleting(true);
+      } else if (isDeleting && isEmpty) {
+        setWordIndex((index) => (index + 1) % rotatingWords.length);
+        setIsDeleting(false);
+      } else {
+        setVisibleWord((word) => (
+          isDeleting ? word.slice(0, -1) : currentWord.slice(0, word.length + 1)
+        ));
+      }
+    }, delay);
+
+    return () => window.clearTimeout(timeout);
+  }, [isDeleting, visibleWord, wordIndex]);
+
+  return (
+    <span className="inline-block min-w-[11ch] text-left" aria-live="polite">
+      {visibleWord}
+      <span className="inline-block h-[0.85em] ml-1 border-r-2 border-current align-[-0.05em] animate-pulse" aria-hidden="true" />
+    </span>
+  );
+};
+
+const FloatingPhone = () => (
+  <div
+    className="mx-auto w-fit [transform-style:preserve-3d]"
+    style={{ transform: 'rotateY(-18deg) rotateX(7deg)' }}
+  >
+    <motion.div
+      animate={{ y: [-4, -15, -4] }}
+      transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut' }}
+      className="relative h-[396px] w-[226px] rounded-[28px] border-2 border-black bg-[#17131f] p-1.5 shadow-[18px_22px_0_rgba(29,22,42,0.16)]"
+    >
+      <div className="absolute left-1/2 top-3 z-20 h-3 w-16 -translate-x-1/2 rounded-full bg-[#17131f]" />
+      <div className="absolute right-4 top-3 z-20 flex items-center gap-1.5 text-[#77717f]">
+        <Wifi className="h-3 w-3" />
+        <BatteryCharging className="h-3 w-3" />
+      </div>
+
+      <div className="relative h-full overflow-hidden rounded-[22px] bg-[#f7f1ff] pt-9">
+        <div className="flex items-center gap-2 border-b border-black/15 px-3 pb-3">
+          <img src="/fluxchat_logo.png" alt="" className="h-6 w-6 rounded-[7px]" />
+          <div className="min-w-0">
+            <p className="truncate text-[10px] font-bold text-black">Main room</p>
+            <p className="text-[8px] text-[#5e5b68]">3 online</p>
+          </div>
+          <span className="ml-auto h-2 w-2 rounded-full border border-black bg-[#00c65a]" />
+        </div>
+
+        <div className="space-y-3 px-3 py-4">
+          <div className="flex items-end gap-1.5">
+            <span className="grid h-5 w-5 place-items-center rounded-full border border-black bg-[#e9e0ff] text-[8px] font-bold">A</span>
+            <div className="max-w-[130px] rounded-[12px] rounded-bl-sm border border-black bg-white px-2.5 py-2 text-[8px] leading-relaxed text-black">
+              Ready to share the update?
+            </div>
+          </div>
+          <div className="ml-auto max-w-[128px] rounded-[12px] rounded-br-sm border border-black bg-[#e7f5fa] px-2.5 py-2 text-[8px] leading-relaxed text-black">
+            Sending it now.
+          </div>
+          <div className="flex items-end gap-1.5">
+            <span className="grid h-5 w-5 place-items-center rounded-full border border-black bg-[#f4e9ff] text-[8px] font-bold">M</span>
+            <div className="rounded-[12px] rounded-bl-sm border border-black bg-white px-2.5 py-2">
+              <span className="inline-flex gap-1">
+                <span className="h-1 w-1 rounded-full bg-[#746c80] animate-bounce" />
+                <span className="h-1 w-1 rounded-full bg-[#746c80] animate-bounce [animation-delay:150ms]" />
+                <span className="h-1 w-1 rounded-full bg-[#746c80] animate-bounce [animation-delay:300ms]" />
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div className="absolute bottom-3 left-3 right-3 flex items-center gap-2 rounded-[14px] border border-black bg-white/80 px-2 py-2">
+          <Paperclip className="h-3.5 w-3.5 text-[#5e5b68]" />
+          <span className="flex-1 text-[8px] text-[#77717f]">Message</span>
+          <Send className="h-3.5 w-3.5 text-black" />
+        </div>
+      </div>
+    </motion.div>
+  </div>
+);
 
 const Hero = () => {
   const container = useRef();
@@ -30,30 +127,36 @@ const Hero = () => {
 
   return (
     <section ref={container} className="pt-32 pb-20 px-6 relative overflow-hidden bg-background">
-      <div className="max-w-7xl mx-auto text-center hero-content">
-        <div className="inline-flex items-center gap-2 bg-surface-container-low px-4 py-2 rounded-full mb-8">
-          <span className="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
-          <span className="text-xs font-bold text-on-surface-variant font-headline tracking-wider uppercase">Live Real-Time Messaging</span>
+      <div className="max-w-7xl mx-auto hero-content">
+        <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_290px] lg:gap-16">
+          <div className="text-center lg:text-left">
+            <div className="inline-flex items-center gap-2 bg-surface-container-low px-4 py-2 rounded-full mb-8">
+              <span className="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+              <span className="text-xs font-bold text-on-surface-variant font-headline tracking-wider uppercase">Live Real-Time Messaging</span>
+            </div>
+
+            <h1 className="text-5xl md:text-7xl font-extrabold font-headline tracking-tighter text-on-background mb-6 max-w-4xl leading-[1.1]">
+              Connect <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary via-indigo-600 to-purple-600 font-black">instantly</span>, <RotatingWord />
+            </h1>
+
+            <p className="text-lg md:text-xl text-on-surface-variant max-w-2xl mx-auto lg:mx-0 mb-10 leading-relaxed">
+              A real-time chat room for focused conversations, active users, and instant replies.
+            </p>
+
+            <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
+              <Link to="/register" className="bg-gradient-to-r from-primary to-primary-dim text-on-primary px-10 py-4 rounded-[8px] font-headline font-bold text-lg shadow-xl shadow-primary/20 hover:scale-[1.02] transition-transform">
+                Start Chatting for Free
+              </Link>
+              <Link to="/login" className="bg-surface-container-highest text-on-surface px-10 py-4 rounded-[8px] font-headline font-bold text-lg hover:bg-surface-variant transition-colors">
+                View Demo
+              </Link>
+            </div>
+          </div>
+
+          <FloatingPhone />
         </div>
 
-        <h1 className="text-5xl md:text-7xl font-extrabold font-headline tracking-tighter text-on-background mb-6 max-w-4xl mx-auto leading-[1.1]">
-          Connect <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary via-indigo-600 to-purple-600 font-black">instantly</span>, everywhere.
-        </h1>
-
-        <p className="text-lg md:text-xl text-on-surface-variant max-w-2xl mx-auto mb-10 leading-relaxed">
-          Elevate your team's synergy with a clean real-time chat room for focused conversations, active users, and instant replies.
-        </p>
-
-        <div className="flex flex-col sm:flex-row justify-center gap-4 mb-20">
-          <Link to="/register" className="bg-gradient-to-r from-primary to-primary-dim text-on-primary px-10 py-4 rounded-[8px] font-headline font-bold text-lg shadow-xl shadow-primary/20 hover:scale-[1.02] transition-transform">
-            Start Chatting for Free
-          </Link>
-          <Link to="/login" className="bg-surface-container-highest text-on-surface px-10 py-4 rounded-[8px] font-headline font-bold text-lg hover:bg-surface-variant transition-colors">
-            View Demo
-          </Link>
-        </div>
-
-        <div className="flex items-center justify-center gap-4 mb-16">
+        <div className="flex items-center justify-center gap-4 mt-16 mb-16">
           <div className="flex -space-x-3">
             <img className="w-12 h-12 rounded-full border-2 border-surface object-cover shadow-sm" alt="User 1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKttQ0zT2TOVrjc8oF5HWJMxGYkaOIewmIun2SgIxTRgo1uc1NQdMimXikLa4Hxt9oDZ412zd7Kj8a7tmQMrL0DKmNLZ9TU15_Ulcpm_b1eWwOJd6MoCP9KubSr5Vf5f3_1nJpPSgnLNpHRd_ftJM9PBzxixQ5YVXQkzAU4yV9uryWzK-iGt6Lsj9ZRlSW_JcWhb--GFWMQLM6u5uEk0bs7le-EIw1QliBUtftsyM0AoHJu9RzZXi66NJwaA-5G3DRN0QmLMrRKjQ" />
             <img className="w-12 h-12 rounded-full border-2 border-surface object-cover shadow-sm" alt="User 2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdo3J1GexqeCYOh-32Z9HjPOZtHwH8E2nElweF9WVODFHSjJWlzygT7ICFYbwo7qWFoqzKZGdtS4BOzwoWNnSEK8jcY2ivo0vbJFg3DO4O8e6IKoRadEx8j4xSMCE566sLEpju3vW40pbMPC9V6AELV5U7WTRuJTKcGWDP_lLlVq25cEK0CflWwBKeU8NKVGPzUHo15SGE4V0Bf3RTQOqrTzbU4aj-Jt3_52k9TTr7uNTtaEP27rcpbGGQ3QJ22Nk5Pg5h6XJXFgs" />
