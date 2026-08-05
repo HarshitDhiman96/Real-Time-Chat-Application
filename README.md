@@ -1,298 +1,273 @@
-# 💬 Real-Time Chat Application
+# FluxChat
 
-A modern, full-stack real-time chat application built with React and Node.js, featuring instant messaging, user authentication, and live typing indicators.
+FluxChat is a full-stack, shared real-time chat room. It combines a React/Vite client with an Express, MongoDB, and Socket.IO server for account management, live room presence, messages, and typing updates.
 
-![React](https://img.shields.io/badge/React-18.2.0-61DAFB?logo=react)
-![Node.js](https://img.shields.io/badge/Node.js-Express-339933?logo=node.js)
-![Socket.io](https://img.shields.io/badge/Socket.io-4.8.1-010101?logo=socket.io)
-![MongoDB](https://img.shields.io/badge/MongoDB-9.0.0-47A248?logo=mongodb)
+## Contents
 
-## ✨ Features
+- [Architecture](#architecture)
+- [Features](#features)
+- [Application flow](#application-flow)
+- [Socket.IO events](#socketio-events)
+- [Routes and API](#routes-and-api)
+- [Local setup](#local-setup)
+- [Project structure](#project-structure)
+- [Deployment](#deployment)
+- [Current behavior and limitations](#current-behavior-and-limitations)
 
-- 🔐 **User Authentication** - Secure login and registration with JWT tokens
-- 💬 **Real-Time Messaging** - Instant message delivery using Socket.io
-- 👥 **Online Users** - See all users currently online in the chat room
-- ⌨️ **Typing Indicators** - Know when someone is typing in real-time
-- 🎨 **Modern UI/UX** - Clean, professional, and responsive design
-- 🔔 **System Notifications** - Get notified when users join or leave
-- 📱 **Responsive Design** - Works seamlessly on desktop and mobile devices
+## Architecture
 
-## 🚀 Tech Stack
-
-### Frontend
-- **React 18** - Modern UI library
-- **Vite** - Fast build tool and dev server
-- **Socket.io Client** - Real-time communication
-- **Axios** - HTTP client for API requests
-- **CSS3** - Custom styling with animations
-
-### Backend
-- **Node.js** - Runtime environment
-- **Express.js** - Web framework
-- **Socket.io** - WebSocket library for real-time features
-- **MongoDB** - NoSQL database
-- **Mongoose** - MongoDB object modeling
-- **JWT** - JSON Web Tokens for authentication
-- **bcryptjs** - Password hashing
-
-## 📁 Project Structure
-
-```
-Chat App/
-│
-├── Backend/
-│   └── src/
-│       ├── controllers/
-│       │   └── auth-controller.js    # Authentication logic
-│       ├── database/
-│       │   └── db.js                 # MongoDB connection
-│       ├── middleware/
-│       │   └── changpswd.js         # Password change middleware
-│       ├── models/
-│       │   └── user.js              # User schema/model
-│       ├── routes/
-│       │   └── auth-routes.js       # Authentication routes
-│       ├── public/                  # Static HTML files
-│       ├── server.js                # Main server file with Socket.io
-│       └── package.json
-│
-├── Frontend/
-│   └── src/
-│       ├── components/
-│       │   ├── Auth/
-│       │   │   ├── Auth.jsx         # Login/Register component
-│       │   │   └── Auth.css         # Auth styles
-│       │   └── Chat/
-│       │       ├── Chat.jsx         # Main chat component
-│       │       ├── MessageList.jsx  # Message display
-│       │       ├── MessageInput.jsx # Message input field
-│       │       ├── UserList.jsx     # Online users sidebar
-│       │       └── Chat.css         # Chat styles
-│       ├── utils/
-│       │   └── api.js               # API utility functions
-│       ├── App.jsx                  # Main app component
-│       ├── main.jsx                 # Entry point
-│       └── index.css                # Global styles
-│
-└── README.md
+```text
+React + Vite client                         Node.js server
+-------------------                         ---------------------------
+Landing, auth, chat, profile    HTTP        Express authentication routes
+Axios ------------------------------->      bcryptjs + JWT
+Socket.IO client -------------------->      Socket.IO event handlers
+                                                     |
+                                                     v
+                                              MongoDB through Mongoose
+                                              (user records only)
 ```
 
-## 🌐 Live Demo
+The application consists of two independently deployed packages:
 
-- **Frontend**: [Deployed on Netlify](https://real-time-chat-application-chatapp.netlify.app) 
-- **Backend**: [Deployed on Render](https://real-time-chat-application-hxoe.onrender.com)
+- `Frontend/` is a React 18 single-page application built with Vite.
+- `Backend/` is a CommonJS Express server. `Backend/src/server.js` is the active entry point and creates the HTTP and Socket.IO servers.
+- MongoDB stores registered users. Live messages, typing state, and online users are held in server memory for the active process.
 
-## 🛠️ Installation & Setup
+## Features
+
+### Landing page
+
+- Responsive landing page with links to registration and login.
+- Animated hero headline: the final word types, pauses, erases, and alternates between `everywhere` and `every time`.
+- Floating mobile chat preview built from the same FluxChat visual language.
+- Scroll-driven feature panels for the three implemented room capabilities: real-time sync, typing status, and online users.
+- Three-step onboarding section covering account creation, room entry, and messaging.
+- Responsive navigation and light/dark theme preference stored in `localStorage`.
+
+### Accounts and authentication
+
+- Registration accepts a username, email address, and password.
+- The server checks for an existing username or email before creating a user.
+- Passwords are salted and hashed with `bcryptjs`; plaintext passwords are not stored.
+- Login returns a JWT with a 30-minute lifetime.
+- The client stores the access token and username in `localStorage`, adds the token to Axios authorization headers, and sends authenticated users to `/chat`.
+- The chat page redirects to `/login` when its required local token or username is missing.
+- Users can change their password from the chat interface or profile page. The endpoint requires an `Authorization: Bearer <token>` header.
+- Logout clears the stored token and username before returning to the login page.
+
+### Shared chat room
+
+- Socket.IO connects each authenticated client to the shared room experience.
+- Messages are broadcast instantly to all connected clients.
+- A live online-user list updates when a username joins or leaves.
+- Join, leave, and welcome messages are rendered as client-side system messages.
+- Typing and stop-typing events show active typers to other participants.
+- The message composer supports sending with the button or with `Enter`; `Shift+Enter` does not submit.
+- The chat layout includes a responsive sidebar, mobile sidebar controls, user status, profile navigation, logout, and a persisted theme toggle.
+
+### Fun Zone canvas
+
+The login and registration pages show a desktop-only Fun Zone beside the form.
+
+- Draw directly on the canvas with a mouse.
+- Reset the current drawing.
+- Export the canvas as `funzone-creativity.png`.
+- The canvas is intentionally local to the browser: drawings are not shared through Socket.IO or stored on the server.
+
+## Application flow
+
+### Sign up and sign in
+
+1. A visitor opens `/register` and submits a username, email, and password.
+2. The frontend calls `POST /chatapp/register`.
+3. Express checks uniqueness, hashes the password, and creates the MongoDB user record.
+4. The visitor logs in through `/login`.
+5. `POST /chatapp/login` verifies the password and returns a JWT.
+6. The browser stores the token and username, plays the login transition, and navigates to `/chat`.
+
+### Join and chat
+
+1. `ChatPage` loads the stored token and username.
+2. `Chat` opens a Socket.IO connection and emits `join` with the username.
+3. The server adds the username to its in-memory `Set` and broadcasts the latest `userList`.
+4. The client displays the welcome message and current participant list.
+5. Sending a message emits `chatMessage`; the server broadcasts it to every connected client.
+6. Input changes emit `typing` or `stopTyping`, which are broadcast to everyone except the sender.
+7. Disconnecting removes the username from the in-memory list and broadcasts `userLeft` plus the refreshed `userList`.
+
+### Change password
+
+1. The user opens the password form from the sidebar or `/profile`.
+2. The client checks that the new password is at least six characters and matches its confirmation.
+3. The client calls `POST /chatapp/changepassword` with the JWT authorization header.
+4. The server verifies the JWT, prevents reuse of the current password, hashes the new password, and saves it to MongoDB.
+
+## Socket.IO events
+
+| Direction | Event | Payload | Result |
+| --- | --- | --- | --- |
+| Client -> server | `join` | `userName` | Registers the username in the active room. |
+| Client -> server | `chatMessage` | `{ userName, text, timestamp }` | Broadcasts the message to all clients. |
+| Client -> server | `typing` | `{ userName }` | Notifies other clients that the user is typing. |
+| Client -> server | `stopTyping` | `{ userName }` | Notifies other clients that typing stopped. |
+| Server -> client | `userList` | `string[]` | Sends the current online usernames. |
+| Server -> client | `userJoined` | `userName` | Announces a newly joined user. |
+| Server -> client | `userLeft` | `userName` | Announces a disconnected user. |
+| Server -> client | `chatMessage` | message object | Delivers a chat message. |
+| Server -> client | `userTyping` | `{ userName }` | Updates remote typing state. |
+| Server -> client | `userStopTyping` | `{ userName }` | Removes a remote typing state. |
+
+## Routes and API
+
+### Frontend routes
+
+| Route | Page | Purpose |
+| --- | --- | --- |
+| `/` | Landing page | Product overview, animated hero, and feature sections. |
+| `/login` | Login | Authenticates an existing user. |
+| `/register` | Register | Creates a new account. |
+| `/chat` | Chat page | Shared real-time room; requires stored login data. |
+| `/profile` | Profile | Displays local profile data and changes the password. |
+
+### HTTP API
+
+| Method | Endpoint | Request body | Authentication |
+| --- | --- | --- | --- |
+| `POST` | `/chatapp/register` | `{ "name", "email", "password" }` | None |
+| `POST` | `/chatapp/login` | `{ "name", "password" }` | None |
+| `POST` | `/chatapp/changepassword` | `{ "name", "newpassword" }` | Bearer JWT |
+
+## Local setup
 
 ### Prerequisites
 
-- Node.js (v16 or higher)
-- npm or yarn
-- MongoDB (local or cloud instance)
+- Node.js 18 or newer
+- npm
+- A MongoDB database, local or hosted
 
-### Backend Setup
+### 1. Configure and run the backend
 
-1. Navigate to the backend directory:
 ```bash
-cd Backend/src
+cd Backend
+npm ci
 ```
 
-2. Install dependencies:
-```bash
-npm install
-```
+Create `Backend/.env`:
 
-3. Create a `.env` file in `Backend/src/`:
 ```env
 PORT=3000
-MONGODB_URI=your_mongodb_connection_string
-jwtkey=your_jwt_secret_key
+mongooseurl=mongodb+srv://<user>:<password>@<cluster>/<database>
+jwtkey=replace-with-a-long-random-secret
+FRONTEND_URL=http://localhost:5173
+NODE_ENV=development
 ```
 
-4. Start the server:
+Start the server:
+
 ```bash
-# Development mode (with nodemon)
 npm run dev
-
-# Production mode
-npm start
 ```
 
-The backend server will run on `http://localhost:3000`
+For a production-style local start, use `npm start`. The API and Socket.IO server listen on `http://localhost:3000` by default.
 
-### Frontend Setup
+### 2. Configure and run the frontend
 
-1. Navigate to the frontend directory:
+In a second terminal:
+
 ```bash
 cd Frontend
+npm ci
 ```
 
-2. Install dependencies:
-```bash
-npm install
+Create `Frontend/.env`:
+
+```env
+VITE_API_URL=http://localhost:3000
+VITE_SOCKET_URL=http://localhost:3000
 ```
 
-3. Start the development server:
+Start Vite:
+
 ```bash
 npm run dev
 ```
 
-The frontend will be available at `http://localhost:5173`
+Open `http://localhost:5173`.
 
-## 📖 Usage
+### Production build
 
-1. **Register/Login**: 
-   - Create a new account or login with existing credentials
-   - JWT token is automatically stored for session management
-
-2. **Join Chat Room**:
-   - After authentication, you'll automatically join the chat room
-   - See a welcome message and current online users
-
-3. **Send Messages**:
-   - Type your message in the input field
-   - Press Enter or click the send button
-   - Messages appear instantly for all users
-
-4. **View Online Users**:
-   - Check the sidebar to see all online users
-   - Your name appears at the top with a "You" badge
-
-5. **Typing Indicators**:
-   - See when other users are typing
-   - Multiple users typing shows as "X users are typing..."
-
-## 🔌 API Endpoints
-
-### Authentication
-
-- `POST /chatapp/register` - Register a new user
-  ```json
-  {
-    "name": "username",
-    "email": "user@example.com",
-    "password": "password123"
-  }
-  ```
-
-- `POST /chatapp/login` - Login user
-  ```json
-  {
-    "name": "username",
-    "password": "password123"
-  }
-  ```
-
-- `POST /chatapp/changepassword` - Change password (requires auth token)
-  ```json
-  {
-    "name": "username",
-    "newpassword": "newpassword123"
-  }
-  ```
-
-## 🔄 Socket.io Events
-
-### Client → Server
-- `join` - Join the chat room with username
-- `chatMessage` - Send a chat message
-- `typing` - User started typing
-- `stopTyping` - User stopped typing
-
-### Server → Client
-- `userList` - Updated list of online users
-- `userJoined` - A new user joined the chat
-- `userLeft` - A user left the chat
-- `chatMessage` - New message received
-- `userTyping` - A user is typing
-- `userStopTyping` - A user stopped typing
-
-## 🎨 Features in Detail
-
-### Authentication System
-- Secure password hashing with bcryptjs
-- JWT token-based authentication
-- 30-minute token expiration
-- Protected routes with middleware
-
-### Real-Time Features
-- Instant message broadcasting
-- Live user list updates
-- Real-time typing indicators
-- System notifications for user join/leave
-
-### User Interface
-- Modern gradient design
-- Smooth animations and transitions
-- Responsive layout
-- Intuitive user experience
-
-## 🔒 Security Features
-
-- Password hashing with bcryptjs
-- JWT token authentication
-- CORS configuration
-- Input validation
-- Secure session management
-
-## 🚧 Future Enhancements
-
-- [ ] Private messaging between users
-- [ ] Message history persistence
-- [ ] File/image sharing
-- [ ] Emoji support
-- [ ] User profiles and avatars
-- [ ] Message search functionality
-- [ ] Dark mode theme
-- [ ] Push notifications
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📝 License
-
-This project is licensed under the ISC License.
-
-## 👨‍💻 Author
-
-Built with ❤️ for real-time communication
-
----
-
-## 📦 Deployment
-
-### Frontend (Netlify)
-
-1. Build the project:
 ```bash
 cd Frontend
 npm run build
 ```
 
-2. Deploy the `dist` folder to Netlify
-3. Set environment variables in Netlify:
-   - `VITE_API_URL=https://real-time-chat-application-hxoe.onrender.com`
-   - `VITE_SOCKET_URL=https://real-time-chat-application-hxoe.onrender.com`
+Vite writes the deployable static files to `Frontend/dist/`. The directory is generated and intentionally ignored by Git.
 
-### Backend (Render)
+## Project structure
 
-1. Connect your GitHub repository to Render
-2. Set environment variables:
-   - `MONGODB_URI=your_mongodb_connection_string`
-   - `jwtkey=your_jwt_secret_key`
-   - `FRONTEND_URL=https://your-netlify-app.netlify.app`
-3. Update CORS in `server.js` to include your Netlify URL
+```text
+Chat App/
++-- Backend/
+|   +-- package.json
+|   `-- src/
+|       +-- controllers/auth-controller.js   # Register, login, password change
+|       +-- database/db.js                   # MongoDB connection
+|       +-- middleware/changpswd.js          # JWT verification middleware
+|       +-- models/user.js                   # Mongoose user model
+|       +-- routes/auth-routes.js            # /chatapp API routes
+|       +-- public/                          # Legacy static HTML pages
+|       `-- server.js                        # Active Express + Socket.IO entry point
++-- Frontend/
+|   +-- public/                              # Logo, notification sound, landing imagery
+|   +-- src/
+|   |   +-- components/
+|   |   |   +-- Auth/                        # Fun Zone canvas and login animation
+|   |   |   +-- Chat/                        # Room, sidebar, messages, navigation
+|   |   |   +-- Landing/                     # Hero, features, onboarding, navigation
+|   |   |   `-- ui/                          # Shared display components
+|   |   +-- hooks/                           # Sound and interaction hooks
+|   |   +-- pages/                           # Landing, login, register, chat, profile
+|   |   +-- utils/api.js                     # Axios client and auth helpers
+|   |   +-- App.jsx                          # Route definitions
+|   |   `-- main.jsx                         # React entry point
+|   +-- package.json
+|   `-- vite.config.js
++-- .gitignore
+`-- README.md
+```
 
-For detailed deployment instructions, see [DEPLOYMENT.md](./DEPLOYMENT.md)
+## Technology stack
 
----
+| Area | Technology |
+| --- | --- |
+| Frontend | React 18, Vite, React Router, Tailwind CSS |
+| Motion and UI | Framer Motion, GSAP, Lucide React |
+| HTTP client | Axios |
+| Realtime | Socket.IO client and server |
+| Backend | Node.js, Express 5, CORS, dotenv |
+| Data and security | MongoDB, Mongoose, bcryptjs, JSON Web Tokens |
 
-**Note**: Make sure MongoDB is running and the connection string in `.env` is correct before starting the backend server.
+## Deployment
 
+The client and server can be deployed separately.
+
+- Build and host `Frontend/dist/` on a static host such as Netlify or Vercel.
+- Host `Backend/` on a Node.js platform such as Render.
+- Set `VITE_API_URL` and `VITE_SOCKET_URL` to the deployed backend URL.
+- Set `FRONTEND_URL` on the backend to the exact deployed frontend origin so the CORS allow-list permits it.
+- Set `mongooseurl`, `jwtkey`, and `PORT` in the backend environment. Do not commit `.env` files.
+
+## Current behavior and limitations
+
+- The room is a single shared space. It does not currently support rooms, private messages, or direct messages.
+- Messages, typing state, and online users are in memory. They reset when the backend restarts and are not persisted to MongoDB.
+- Socket.IO receives a token from the client, but the current server event handlers do not validate the token or associate socket events with its JWT identity. Production hardening should add Socket.IO authentication middleware and server-side identity checks.
+- The attachment and emoji buttons are present in the message composer but do not yet upload files or open an emoji picker.
+- The Fun Zone supports mouse drawing on large screens. Touch drawing and shared whiteboards are not implemented.
+- The profile email is currently a local placeholder when no email value exists in browser storage; the profile does not fetch account details from the API.
+- `Backend/src/index.js` is a legacy Express-only entry point. Use `Backend/src/server.js`, which is what the package scripts run.
+
+## License
+
+ISC
